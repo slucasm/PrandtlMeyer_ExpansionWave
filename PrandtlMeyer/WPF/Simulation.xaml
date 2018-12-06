@@ -1,0 +1,50 @@
+﻿<Window x:Class="WPF.Simulation"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Simulation" Height="650" Width="1300" WindowStyle="None" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Loaded="Window_Loaded">
+    <Grid Background="#FF2D2D30" Name="grid_window">
+        <Rectangle Fill="#FF007CBF" Height="650" HorizontalAlignment="Left" Margin="0" Name="rectangle" Stroke="#FF007CBF" VerticalAlignment="Top" Width="250" />
+        <Button Background="#FF007CBF" BorderThickness="0" Content="Introduction" FontFamily="Century Gothic,12pt" FontWeight="Bold" Foreground="White" Height="50" HorizontalAlignment="Left" Margin="0,150,0,0" Name="button_introduction" VerticalAlignment="Top" Width="250" Click="button_introduction_Click" />
+        <Button Background="#FF2D2D30" BorderBrush="#FF007CBF" BorderThickness="0" Content="Simulation" FontFamily="Century Gothic" FontWeight="Bold" Foreground="White" Height="50" HorizontalAlignment="Left" Margin="0,200,0,0" Name="button_simulation" VerticalAlignment="Top" Width="250" />
+        <Button Background="#FF007CBF" BorderThickness="0" Content="Tables with results" FontFamily="Century Gothic" FontWeight="Bold" Foreground="White" Height="50" HorizontalAlignment="Left" Margin="0,250,0,0" Name="button_tableresults" VerticalAlignment="Top" Width="250" Click="button_tableresults_Click" />
+        <Button Background="#FF007CBF" BorderThickness="0" Content="Close" FontFamily="Century Gothic" FontWeight="Bold" Foreground="White" Height="50" HorizontalAlignment="Left" Margin="0,300,0,0" Name="button_close" VerticalAlignment="Top" Width="250" Click="button_close_Click" />
+        <Grid Height="400" HorizontalAlignment="Left" Margin="356,174,0,0" Name="grid_u" VerticalAlignment="Top" Width="700" Visibility="Visible" MouseEnter="grid_u_MouseEnter">
+            <Grid.Background>
+                <SolidColorBrush />
+            </Grid.Background>
+        </Grid>
+        <GroupBox Header="Select parameters" Height="116" HorizontalAlignment="Left" Margin="363,9,0,0" Name="groupBox_parameter" VerticalAlignment="Top" Width="546" FontFamily=" Century Gothic" FontWeight="Bold" Foreground="White"></GroupBox>
+        <Button Content="Calculate" Height="50" HorizontalAlignment="Left" Margin="1112,200,0,0" Name="button_calculate" VerticalAlignment="Top" Width="120" />
+        <Button Content="Restart" Height="53" HorizontalAlignment="Left" Margin="1112,300,0,0" Name="button_restart" VerticalAlignment="Top" Width="120" />
+        <ComboBox Height="27" HorizontalAlignment="Left" Margin="532,131,0,0" Name="comboBox_selectgrid" VerticalAlignment="Top" Width="121" SelectionChanged="comboBox_selectgrid_SelectionChanged" />
+        <Button Content="Save" Height="54" HorizontalAlignment="Left" Margin="1112,403,0,0" Name="button_save" VerticalAlignment="Top" Width="120" />
+        <Button Content="Open" Height="54" HorizontalAlignment="Left" Margin="1112,497,0,0" Name="button_open" VerticalAlignment="Top" Width="118" />
+        <Canvas Height="390" HorizontalAlignment="Left" Margin="355,173,0,0" Name="canvas1" VerticalAlignment="Top" Width="700" Background="White" Visibility="Hidden" />
+        <Grid Height="390" HorizontalAlignment="Left" Margin="355,173,0,0" Name="grid_v" VerticalAlignment="Top" Width="700">
+            <Grid.Background>
+                <SolidColorBrush />
+            </Grid.Background>
+        </Grid>
+        <Grid Height="390" HorizontalAlignment="Left" Margin="355,173,0,0" Name="grid_rho" VerticalAlignment="Top" Width="700">
+            <Grid.Background>
+                <SolidColorBrush />
+            </Grid.Background>
+        </Grid>
+        <Grid Height="390" HorizontalAlignment="Left" Margin="355,173,0,0" Name="grid_P" VerticalAlignment="Top" Width="700">
+            <Grid.Background>
+                <SolidColorBrush />
+            </Grid.Background>
+        </Grid>
+        <Grid Height="390" HorizontalAlignment="Left" Margin="355,173,0,0" Name="grid_T" VerticalAlignment="Top" Width="700">
+            <Grid.Background>
+                <SolidColorBrush />
+            </Grid.Background>
+        </Grid>
+        <Grid Height="390" HorizontalAlignment="Left" Margin="355,173,0,0" Name="grid_M" VerticalAlignment="Top" Width="700">
+            <Grid.Background>
+                <SolidColorBrush />
+            </Grid.Background>
+        </Grid>
+        <Label Content="Label" Height="30" HorizontalAlignment="Left" Margin="355,569,0,0" Name="label_information" VerticalAlignment="Top" Width="700" Foreground="White" FontFamily="Century Gothic" />
+    </Grid>
+</Window>

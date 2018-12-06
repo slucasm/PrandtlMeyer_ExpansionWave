@@ -1,0 +1,18 @@
+﻿<Window x:Class="WPF.Tables"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Tables" Height="650" Width="1300" Background="#FF2D2D30" WindowStyle="None" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="936*" />
+            <ColumnDefinition Width="342*" />
+        </Grid.ColumnDefinitions>
+        <Rectangle Fill="#FF007CBF" Height="650" HorizontalAlignment="Left" Name="rectangle" Stroke="#FF007CBF" VerticalAlignment="Top" Width="250" />
+        <Button Background="#FF007CBF" BorderThickness="0" Content="Introduction" FontFamily="Century Gothic,12pt" FontWeight="Bold" Foreground="White" Height="50" HorizontalAlignment="Left" Margin="0,150,0,0" Name="button_introduction" VerticalAlignment="Top" Width="250" Click="button_introduction_Click" />
+        <Button Background="#FF007CBF" BorderBrush="#FF007CBF" BorderThickness="0" Content="Simulation" FontFamily="Century Gothic" FontWeight="Bold" Foreground="White" Height="50" HorizontalAlignment="Left" Margin="0,200,0,0" Name="button_simulation" VerticalAlignment="Top" Width="250" Click="button_simulation_Click" />
+        <Button Background="#FF2D2D30" BorderThickness="0" Content="Tables with results" FontFamily="Century Gothic" FontWeight="Bold" Foreground="White" Height="50" HorizontalAlignment="Left" Margin="0,250,0,0" Name="button_tableresults" VerticalAlignment="Top" Width="250" BorderBrush="#FF2D2D30" />
+        <Button Background="#FF007CBF" BorderThickness="0" Content="Close" FontFamily="Century Gothic" FontWeight="Bold" Foreground="White" Height="50" HorizontalAlignment="Left" Margin="0,300,0,0" Name="button_close" VerticalAlignment="Top" Width="250" Click="button_close_Click" />
+        <Grid Grid.ColumnSpan="2" Height="408" HorizontalAlignment="Left" Margin="371,124,0,0" Name="grid1" VerticalAlignment="Top" Width="776" Background="White" />
+        <ComboBox Height="36" HorizontalAlignment="Left" Margin="607,48,0,0" Name="comboBox_selectgrid" VerticalAlignment="Top" Width="184" />
+    </Grid>
+</Window>
