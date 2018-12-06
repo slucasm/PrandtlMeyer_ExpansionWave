@@ -19,8 +19,8 @@
         <Button Content="Calculate" Height="50" HorizontalAlignment="Left" Margin="1112,200,0,0" Name="button_calculate" VerticalAlignment="Top" Width="120" Click="button_calculate_Click" Background="#FF007CBF" FontFamily="Century Gothic" FontWeight="Bold" Foreground="White" />
         <Button Content="Restart" Height="53" HorizontalAlignment="Left" Margin="1112,300,0,0" Name="button_restart" VerticalAlignment="Top" Width="120" Background="#FF007CBF" FontFamily="Century Gothic" FontWeight="Bold" Foreground="White" Click="button_restart_Click" />
         <ComboBox Height="27" HorizontalAlignment="Left" Margin="532,131,0,0" Name="comboBox_selectgrid" VerticalAlignment="Top" Width="121" SelectionChanged="comboBox_selectgrid_SelectionChanged" />
-        <Button Content="Save" Height="54" HorizontalAlignment="Left" Margin="1112,403,0,0" Name="button_save" VerticalAlignment="Top" Width="120" Background="#FF007CBF" FontFamily="Century Gothic" FontWeight="Bold" Foreground="White" />
-        <Button Content="Open" Height="54" HorizontalAlignment="Left" Margin="1112,497,0,0" Name="button_open" VerticalAlignment="Top" Width="118" Background="#FF007CBF" FontFamily="Century Gothic" FontWeight="Bold" Foreground="White" />
+        <Button Content="Save" Height="54" HorizontalAlignment="Left" Margin="1112,403,0,0" Name="button_save" VerticalAlignment="Top" Width="120" Background="#FF007CBF" FontFamily="Century Gothic" FontWeight="Bold" Foreground="White" Click="button_save_Click" />
+        <Button Content="Open" Height="54" HorizontalAlignment="Left" Margin="1112,497,0,0" Name="button_open" VerticalAlignment="Top" Width="118" Background="#FF007CBF" FontFamily="Century Gothic" FontWeight="Bold" Foreground="White" Click="button_open_Click" />
         <Canvas Height="390" HorizontalAlignment="Left" Margin="355,173,0,0" Name="canvas1" VerticalAlignment="Top" Width="700" Background="White" Visibility="Hidden" />
         <Grid Height="390" HorizontalAlignment="Left" Margin="355,173,0,0" Name="grid_v" VerticalAlignment="Top" Width="700">
             <Grid.Background>

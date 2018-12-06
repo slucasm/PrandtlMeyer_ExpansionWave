@@ -21,11 +21,12 @@ namespace WPF
     /// </summary>
     public partial class Tables : Window
     {
-        public Tables(Matriz matrix,Simulation originalForm)
+        public Tables(Matriz matrix,Simulation originalForm,List<DataTable> listTables)
         {
             InitializeComponent();
             this.matrix = matrix;
             this.originalForm = originalForm;
+            this.listTables = listTables;
         }
         Simulation originalForm;
         Matriz matrix;
@@ -41,9 +42,7 @@ namespace WPF
 
         private void button_simulation_Click(object sender, RoutedEventArgs e)
         {
-            //Simulation simulation = new Simulation(matrix);
-            //simulation.Show();
-            originalForm.Show();
+            originalForm.Show();           
             this.Hide();
         }
 
@@ -63,7 +62,7 @@ namespace WPF
 
             comboBox_selectgrid.SelectedIndex = 0;
 
-            listTables = matrix.createTables();
+            //listTables = matrix.createTables();
 
             grid_u.ItemsSource = listTables[0].DefaultView;
             grid_v.ItemsSource = listTables[1].DefaultView;

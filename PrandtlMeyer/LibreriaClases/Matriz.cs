@@ -5,6 +5,8 @@ using System.Text;
 using System.Windows.Shapes;
 using System.Data;
 using System.Windows.Controls;
+using Microsoft.Win32;
+using System.IO;
 
 namespace LibreriaClases
 {
@@ -347,6 +349,81 @@ namespace LibreriaClases
 
             return listTables;
 
+        }
+
+        public void clearTables()
+        {
+            table_u.Clear();
+            table_v.Clear();
+            table_rho.Clear();
+            table_P.Clear();
+            table_T.Clear();
+            table_M.Clear();
+
+        }
+
+
+
+        public void Save()
+        {
+            SaveFileDialog ofd = new SaveFileDialog();
+            ofd.DefaultExt = "txt";
+            ofd.Filter = "Archivos txt(*.txt)|*.txt";
+            ofd.Title = "Guarda los datos";
+            ofd.ShowDialog();
+            string nombre = ofd.FileName;
+            StreamWriter fichero = new StreamWriter(nombre);
+            fichero.Write(rows);
+            fichero.Write("\r\n");
+            fichero.Write(columns);
+            fichero.Write("\r\n");
+            fichero.Write(Rho_in);
+            fichero.Write("\r\n");
+            fichero.Write(P_in);
+            fichero.Write("\r\n");
+            fichero.Write(T_in);
+            fichero.Write("\r\n");
+            fichero.Write(M_in);
+            fichero.Write("\r\n");
+            fichero.Write(R_air);
+            fichero.Write("\r\n");
+            fichero.Write(Gamma);
+            fichero.Write("\r\n");
+            fichero.Write(E);
+            fichero.Write("\r\n");
+            fichero.Write(theta);
+            fichero.Write("\r\n");
+            fichero.Close();
+
+        }
+
+
+        public void Open()
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.DefaultExt = "txt";
+            ofd.Filter = "Text|*.txt";
+            ofd.Title = "Abrir archivos";
+            ofd.ShowDialog();
+            string nombre = ofd.FileName;
+            StreamReader fichero = new StreamReader(nombre);
+
+            rows = Convert.ToInt32(fichero.ReadLine());
+            columns = Convert.ToInt32(fichero.ReadLine());
+            Rho_in = Convert.ToDouble(fichero.ReadLine());
+            P_in = Convert.ToDouble(fichero.ReadLine());
+            T_in = Convert.ToDouble(fichero.ReadLine());
+            M_in = Convert.ToDouble(fichero.ReadLine());
+            R_air = Convert.ToDouble(fichero.ReadLine());
+            Gamma = Convert.ToDouble(fichero.ReadLine());
+            E = Convert.ToDouble(fichero.ReadLine());
+            theta = Convert.ToDouble(fichero.ReadLine());
+
+            a_in = Math.Sqrt(Gamma * R_air * T_in);
+            v_in = 0;
+            u_in = M_in * a_in;
+
+            matrix = new Cell[rows, columns];
         }
 
         /**

@@ -25,7 +25,7 @@ namespace WPF
             InitializeComponent();
             this.matrix = matrix;
         }
-
+       
         List<Polygon> listPolygons_u = new List<Polygon>();
         List<Polygon> listPolygons_v = new List<Polygon>();
         List<Polygon> listPolygons_rho = new List<Polygon>();
@@ -33,16 +33,20 @@ namespace WPF
         List<Polygon> listPolygons_T = new List<Polygon>();
         List<Polygon> listPolygons_M = new List<Polygon>();
 
-        DataTable table_u = new DataTable();
+        List<DataTable> listTables = new List<DataTable>();
+
+        /**DataTable table_u = new DataTable();
         DataTable table_v = new DataTable();
         DataTable table_rho = new DataTable();
         DataTable table_P = new DataTable();
         DataTable table_T = new DataTable();
-        DataTable table_M = new DataTable();
+        DataTable table_M = new DataTable();**/
 
         List<Cell> listCells = new List<Cell>();
 
         Matriz matrix = new Matriz();
+
+
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -79,9 +83,10 @@ namespace WPF
 
         private void button_tableresults_Click(object sender, RoutedEventArgs e)
         {
-            Tables tables = new Tables(matrix,this);
-            tables.Show();
-            this.Hide();
+                Tables tables = new Tables(matrix, this,listTables);
+                tables.Show();
+                this.Hide();
+            
         }
 
         private void button_close_Click(object sender, RoutedEventArgs e)
@@ -245,6 +250,8 @@ namespace WPF
 
 
                 }
+
+                listTables = matrix.createTables();
             }
 
             else
@@ -270,6 +277,67 @@ namespace WPF
             grid_u.Children.Clear();
             grid_v.Children.Clear();
 
+            listTables.Clear();
+
+        }
+
+        private void button_save_Click(object sender, RoutedEventArgs e)
+        {
+            matrix.Save();
+        }
+
+        private void button_open_Click(object sender, RoutedEventArgs e)
+        {
+            matrix.Open();
+
+            matrix.Initialize();
+            matrix.calculate();
+            matrix.calculatePoligons();
+            List<List<Polygon>> listPolygons = matrix.getListPolygons();
+            listPolygons_u = listPolygons[0];
+            listPolygons_v = listPolygons[1];
+            listPolygons_rho = listPolygons[2];
+            listPolygons_P = listPolygons[3];
+            listPolygons_T = listPolygons[4];
+            listPolygons_M = listPolygons[5];
+
+            listCells = matrix.getListCells();
+
+            for (int i = 0; i < listPolygons_u.Count; i++)
+            {
+                listPolygons_u[i].MouseEnter += Polygon_MouseEnter;
+                listPolygons_u[i].MouseLeave += Polygon_MouseLeave;
+
+                grid_u.Children.Add(listPolygons_u[i]);
+
+                listPolygons_v[i].MouseEnter += Polygon_MouseEnter;
+                listPolygons_v[i].MouseLeave += Polygon_MouseLeave;
+
+                grid_v.Children.Add(listPolygons_v[i]);
+
+                listPolygons_rho[i].MouseEnter += Polygon_MouseEnter;
+                listPolygons_rho[i].MouseLeave += Polygon_MouseLeave;
+
+                grid_rho.Children.Add(listPolygons_rho[i]);
+
+                listPolygons_P[i].MouseEnter += Polygon_MouseEnter;
+                listPolygons_P[i].MouseLeave += Polygon_MouseLeave;
+
+                grid_P.Children.Add(listPolygons_P[i]);
+
+                listPolygons_T[i].MouseEnter += Polygon_MouseEnter;
+                listPolygons_T[i].MouseLeave += Polygon_MouseLeave;
+
+                grid_T.Children.Add(listPolygons_T[i]);
+
+                listPolygons_M[i].MouseEnter += Polygon_MouseEnter;
+                listPolygons_M[i].MouseLeave += Polygon_MouseLeave;
+
+                grid_M.Children.Add(listPolygons_M[i]);
+
+
+            }
+            listTables = matrix.createTables();
         }
         
     }
