@@ -279,6 +279,17 @@ namespace WPF
 
             listTables.Clear();
 
+            textBox_columns.Text = "";
+            textBox_rows.Text = "";
+            textBox_P.Text = "";
+            textBox_T.Text = "";
+            textBox_M.Text = "";
+            textBox_gamma.Text = "";
+            textBox_R.Text = "";
+            textBox_rho.Text = "";
+            textBox_E.Text = "";
+            textBox_theta.Text = "";
+
         }
 
         private void button_save_Click(object sender, RoutedEventArgs e)
