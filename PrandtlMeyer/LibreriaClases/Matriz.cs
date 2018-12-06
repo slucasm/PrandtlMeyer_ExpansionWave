@@ -12,25 +12,30 @@ namespace LibreriaClases
     {
         public Matriz() { }
 
-        static int rows = 41;
-        static int columns = 89;
+        //public int rows = 41;
+        //public int columns = 89;
 
-        public Cell[,] matrix = new Cell[rows,columns];
+
+        public int rows, columns;
+        public double u_in, a_in, v_in, Rho_in, M_in, P_in, T_in, Gamma, E, theta, R_air;
+        public Cell[,] matrix;
+
+        //public Cell[,] matrix = new Cell[rows,columns];
 
         static double C = 0.5; //Courant number
         static double H = 40;
-        static double theta = 5.352;
+        //public double theta = 5.352;
         static double L = 65;
-        static double E = 10;
-        static double M_in = 2;
-        static double P_in = 1.01*Math.Pow(10,5);
-        static double Rho_in = 1.23; 
-        static double R_air = 287; 
-        static double Gamma = 1.4;
-        static double T_in = 286.1;
-        static double a_in = Math.Sqrt(Gamma * R_air * T_in);
-        static double v_in = 0;
-        static double u_in = M_in * a_in;
+        //public double E = 10;
+        //public double M_in = 2;
+        //public double P_in = 1.01*Math.Pow(10,5);
+        //public double Rho_in = 1.23; 
+        //public double R_air = 287; 
+        //public double Gamma = 1.4;
+        //public double T_in = 286.1;
+        //double a_in = Math.Sqrt(Gamma * R_air * T_in);
+        //double v_in = 0;
+        //double u_in = M_in * a_in;
 
         double delta_y_t = 0.025;
 
@@ -45,6 +50,26 @@ namespace LibreriaClases
         DataTable table_M = new DataTable();
 
         List<Cell> listCells = new List<Cell>();
+
+        public void setParameters(int rows, int columns, double rho, double P, double T, double M, double R, double gamma, double E, double theta)
+        {
+            this.rows = rows;
+            this.columns = columns;
+            this.Rho_in = rho;
+            this.P_in = P;
+            this.T_in = T;
+            this.M_in = M;
+            this.R_air = R;
+            this.Gamma = gamma;
+            this.E = E;
+            this.theta = theta;
+            this.a_in = Math.Sqrt(Gamma * R_air * T_in);
+            this.v_in = 0;
+            this.u_in = M_in * a_in;
+
+            this.matrix = new Cell[rows, columns];
+
+        }
         
 
         public void Initialize() //We write the initial values for the first column
@@ -234,10 +259,15 @@ namespace LibreriaClases
                     listCells.Add(matrix[i, j]);
                     matrix[i, j].polygon_u.DataContext = z;
                     listPolygons_u.Add(matrix[i, j].polygon_u);
+                    matrix[i, j].polygon_v.DataContext = z;
                     listPolygons_v.Add(matrix[i, j].polygon_v);
+                    matrix[i, j].polygon_rho.DataContext = z;
                     listPolygons_rho.Add(matrix[i, j].polygon_rho);
+                    matrix[i, j].polygon_P.DataContext = z;
                     listPolygons_P.Add(matrix[i, j].polygon_P);
+                    matrix[i, j].polygon_T.DataContext = z;
                     listPolygons_T.Add(matrix[i, j].polygon_T);
+                    matrix[i, j].polygon_M.DataContext = z;
                     listPolygons_M.Add(matrix[i, j].polygon_M);
                     z++;
                 }

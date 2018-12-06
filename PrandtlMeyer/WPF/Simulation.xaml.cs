@@ -56,51 +56,7 @@ namespace WPF
 
             label_information.Content = ("u:        v:      rho:        P:      T:      M:");
 
-            matrix.Initialize();
-            matrix.calculate();
-            matrix.calculatePoligons();
-            List<List<Polygon>> listPolygons = matrix.getListPolygons();
-            listPolygons_u = listPolygons[0];
-            listPolygons_v = listPolygons[1];
-            listPolygons_rho = listPolygons[2];
-            listPolygons_P = listPolygons[3];
-            listPolygons_T = listPolygons[4];
-            listPolygons_M = listPolygons[5];
-
-            listCells = matrix.getListCells();
-
-            for (int i = 0; i < listPolygons_u.Count;i++)
-            {
-                grid_u.Children.Add(listPolygons_u[i]);
-
-                listPolygons_u[i].MouseEnter += Polygon_MouseEnter;
-                listPolygons_u[i].MouseLeave += Polygon_MouseLeave;
-
-                grid_v.Children.Add(listPolygons_v[i]);
-
-                listPolygons_v[i].MouseEnter += Polygon_MouseEnter;
-                listPolygons_v[i].MouseLeave += Polygon_MouseLeave;
-
-                grid_rho.Children.Add(listPolygons_rho[i]);
-
-                listPolygons_rho[i].MouseEnter += Polygon_MouseEnter;
-                listPolygons_rho[i].MouseLeave += Polygon_MouseLeave;
-
-                grid_P.Children.Add(listPolygons_P[i]);
-
-                listPolygons_P[i].MouseEnter += Polygon_MouseEnter;
-                listPolygons_P[i].MouseLeave += Polygon_MouseLeave;
-
-                grid_T.Children.Add(listPolygons_T[i]);
-
-                listPolygons_T[i].MouseEnter += Polygon_MouseEnter;
-                listPolygons_T[i].MouseLeave += Polygon_MouseLeave;
-
-                grid_M.Children.Add(listPolygons_M[i]);
-
-                listPolygons_M[i].MouseEnter += Polygon_MouseEnter;
-                listPolygons_M[i].MouseLeave += Polygon_MouseLeave;
-            }
+            
 
 
             
@@ -123,7 +79,7 @@ namespace WPF
 
         private void button_tableresults_Click(object sender, RoutedEventArgs e)
         {
-            Tables tables = new Tables(matrix);
+            Tables tables = new Tables(matrix,this);
             tables.Show();
             this.Hide();
         }
@@ -147,11 +103,6 @@ namespace WPF
             }
             else if (comboBox_selectgrid.SelectedIndex == 1)
             {
-                //grid_u.Children.Clear();
-                //for (int i = 0; i < listPolygons_v.Count; i++)
-                //{
-                //    grid_v.Children.Add(listPolygons_v[i]);
-                //}
                 grid_u.Visibility = Visibility.Hidden;
                 grid_v.Visibility = Visibility.Visible;
                 grid_rho.Visibility = Visibility.Hidden;
@@ -161,10 +112,6 @@ namespace WPF
             }
             else if (comboBox_selectgrid.SelectedIndex == 2)
             {
-                //for (int i = 0; i < listPolygons_rho.Count; i++)
-                //{
-                //    grid_rho.Children.Add(listPolygons_rho[i]);
-                //}
                 grid_u.Visibility = Visibility.Hidden;
                 grid_v.Visibility = Visibility.Hidden;
                 grid_rho.Visibility = Visibility.Visible;
@@ -174,10 +121,6 @@ namespace WPF
             }
             else if (comboBox_selectgrid.SelectedIndex == 3)
             {
-                //for (int i = 0; i < listPolygons_P.Count; i++)
-                //{
-                //    grid_P.Children.Add(listPolygons_P[i]);
-                //}
                 grid_u.Visibility = Visibility.Hidden;
                 grid_v.Visibility = Visibility.Hidden;
                 grid_rho.Visibility = Visibility.Hidden;
@@ -187,10 +130,6 @@ namespace WPF
             }
             else if (comboBox_selectgrid.SelectedIndex == 4)
             {
-                //for (int i = 0; i < listPolygons_T.Count; i++)
-                //{
-                //    grid_T.Children.Add(listPolygons_T[i]);
-                //}
                 grid_u.Visibility = Visibility.Hidden;
                 grid_v.Visibility = Visibility.Hidden;
                 grid_rho.Visibility = Visibility.Hidden;
@@ -200,10 +139,6 @@ namespace WPF
             }
             else if (comboBox_selectgrid.SelectedIndex == 5)
             {
-                //for (int i = 0; i < listPolygons_M.Count; i++)
-                //{
-                //    grid_M.Children.Add(listPolygons_M[i]);
-                //}
                 grid_u.Visibility = Visibility.Hidden;
                 grid_v.Visibility = Visibility.Hidden;
                 grid_rho.Visibility = Visibility.Hidden;
@@ -230,6 +165,111 @@ namespace WPF
         private void Polygon_MouseLeave(object sender, MouseEventArgs e)
         {
             label_information.Content = String.Format("u:        v:      rho:        P:      T:      M:");
+        }
+
+        private void button_default_Click(object sender, RoutedEventArgs e)
+        {
+            textBox_rho.Text = "1,23";
+            textBox_P.Text = "101000";
+            textBox_T.Text = "286,1";
+            textBox_M.Text = "2";
+            textBox_R.Text = "287";
+            textBox_gamma.Text = "1,4";
+            textBox_E.Text = "10";
+            textBox_theta.Text = "5,352";
+            textBox_rows.Text = "41";
+            textBox_columns.Text = "89";
+        }
+
+        private void button_calculate_Click(object sender, RoutedEventArgs e)
+        {
+            if (textBox_columns.Text != "" && textBox_rows.Text != "" && textBox_rho.Text != "" && textBox_P.Text != "" && textBox_T.Text != "" && textBox_M.Text != "" && textBox_R.Text != "" && textBox_E.Text != "" && textBox_gamma.Text != "" && textBox_theta.Text != "")
+            {
+                int rows = Convert.ToInt32(textBox_rows.Text);
+                int columns = Convert.ToInt32(textBox_columns.Text);
+                double rho = Convert.ToDouble(textBox_rho.Text);
+                double P = Convert.ToDouble(textBox_P.Text);
+                double T = Convert.ToDouble(textBox_T.Text);
+                double M = Convert.ToDouble(textBox_M.Text);
+                double R = Convert.ToDouble(textBox_R.Text);
+                double Gamma = Convert.ToDouble(textBox_gamma.Text);
+                double E = Convert.ToDouble(textBox_E.Text);
+                double theta = Convert.ToDouble(textBox_theta.Text);
+
+                matrix.setParameters(rows, columns, rho, P, T, M, R, Gamma, E, theta);
+
+                matrix.Initialize();
+                matrix.calculate();
+                matrix.calculatePoligons();
+                List<List<Polygon>> listPolygons = matrix.getListPolygons();
+                listPolygons_u = listPolygons[0];
+                listPolygons_v = listPolygons[1];
+                listPolygons_rho = listPolygons[2];
+                listPolygons_P = listPolygons[3];
+                listPolygons_T = listPolygons[4];
+                listPolygons_M = listPolygons[5];
+
+                listCells = matrix.getListCells();
+
+                for (int i = 0; i < listPolygons_u.Count; i++)
+                {
+                    listPolygons_u[i].MouseEnter += Polygon_MouseEnter;
+                    listPolygons_u[i].MouseLeave += Polygon_MouseLeave;
+
+                    grid_u.Children.Add(listPolygons_u[i]);
+
+                    listPolygons_v[i].MouseEnter += Polygon_MouseEnter;
+                    listPolygons_v[i].MouseLeave += Polygon_MouseLeave;
+
+                    grid_v.Children.Add(listPolygons_v[i]);
+
+                    listPolygons_rho[i].MouseEnter += Polygon_MouseEnter;
+                    listPolygons_rho[i].MouseLeave += Polygon_MouseLeave;
+
+                    grid_rho.Children.Add(listPolygons_rho[i]);
+
+                    listPolygons_P[i].MouseEnter += Polygon_MouseEnter;
+                    listPolygons_P[i].MouseLeave += Polygon_MouseLeave;
+
+                    grid_P.Children.Add(listPolygons_P[i]);
+
+                    listPolygons_T[i].MouseEnter += Polygon_MouseEnter;
+                    listPolygons_T[i].MouseLeave += Polygon_MouseLeave;
+
+                    grid_T.Children.Add(listPolygons_T[i]);
+
+                    listPolygons_M[i].MouseEnter += Polygon_MouseEnter;
+                    listPolygons_M[i].MouseLeave += Polygon_MouseLeave;
+
+                    grid_M.Children.Add(listPolygons_M[i]);
+
+
+                }
+            }
+
+            else
+            {
+                MessageBox.Show("First select all initial parameters");
+            }
+        }
+
+        private void button_restart_Click(object sender, RoutedEventArgs e)
+        {
+            this.matrix = new Matriz();
+            listPolygons_M.Clear();
+            listPolygons_P.Clear();
+            listPolygons_rho.Clear();
+            listPolygons_T.Clear();
+            listPolygons_u.Clear();
+            listPolygons_v.Clear();
+
+            grid_M.Children.Clear();
+            grid_P.Children.Clear();
+            grid_rho.Children.Clear();
+            grid_T.Children.Clear();
+            grid_u.Children.Clear();
+            grid_v.Children.Clear();
+
         }
         
     }

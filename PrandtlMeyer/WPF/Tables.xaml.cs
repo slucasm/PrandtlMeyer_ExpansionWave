@@ -21,12 +21,13 @@ namespace WPF
     /// </summary>
     public partial class Tables : Window
     {
-        public Tables(Matriz matrix)
+        public Tables(Matriz matrix,Simulation originalForm)
         {
             InitializeComponent();
             this.matrix = matrix;
+            this.originalForm = originalForm;
         }
-
+        Simulation originalForm;
         Matriz matrix;
 
         List<DataTable> listTables = new List<DataTable>();
@@ -40,8 +41,9 @@ namespace WPF
 
         private void button_simulation_Click(object sender, RoutedEventArgs e)
         {
-            Simulation simulation = new Simulation(matrix);
-            simulation.Show();
+            //Simulation simulation = new Simulation(matrix);
+            //simulation.Show();
+            originalForm.Show();
             this.Hide();
         }
 

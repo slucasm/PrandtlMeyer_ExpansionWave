@@ -97,9 +97,10 @@ namespace WPF
 
         private void button_tableresults_Click(object sender, RoutedEventArgs e)
         {
-            Tables tables = new Tables(matrix);
-            tables.Show();
-            this.Hide();
+            //Tables tables = new Tables(matrix);
+            //tables.Show();
+            //this.Hide();
+            MessageBox.Show("First you have to create the problem");
         }
 
         private void button_close_Click(object sender, RoutedEventArgs e)

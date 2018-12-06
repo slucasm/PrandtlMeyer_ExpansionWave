@@ -8,17 +8,19 @@
         <Button Background="#FF2D2D30" BorderBrush="#FF007CBF" BorderThickness="0" Content="Simulation" FontFamily="Century Gothic" FontWeight="Bold" Foreground="White" Height="50" HorizontalAlignment="Left" Margin="0,200,0,0" Name="button_simulation" VerticalAlignment="Top" Width="250" />
         <Button Background="#FF007CBF" BorderThickness="0" Content="Tables with results" FontFamily="Century Gothic" FontWeight="Bold" Foreground="White" Height="50" HorizontalAlignment="Left" Margin="0,250,0,0" Name="button_tableresults" VerticalAlignment="Top" Width="250" Click="button_tableresults_Click" />
         <Button Background="#FF007CBF" BorderThickness="0" Content="Close" FontFamily="Century Gothic" FontWeight="Bold" Foreground="White" Height="50" HorizontalAlignment="Left" Margin="0,300,0,0" Name="button_close" VerticalAlignment="Top" Width="250" Click="button_close_Click" />
-        <Grid Height="400" HorizontalAlignment="Left" Margin="356,174,0,0" Name="grid_u" VerticalAlignment="Top" Width="700" Visibility="Visible" MouseEnter="grid_u_MouseEnter">
+        <Grid Height="400" HorizontalAlignment="Left" Margin="356,174,0,0" Name="grid_u" VerticalAlignment="Top" Width="700" Visibility="Visible">
             <Grid.Background>
                 <SolidColorBrush />
             </Grid.Background>
         </Grid>
-        <GroupBox Header="Select parameters" Height="116" HorizontalAlignment="Left" Margin="363,9,0,0" Name="groupBox_parameter" VerticalAlignment="Top" Width="546" FontFamily=" Century Gothic" FontWeight="Bold" Foreground="White"></GroupBox>
-        <Button Content="Calculate" Height="50" HorizontalAlignment="Left" Margin="1112,200,0,0" Name="button_calculate" VerticalAlignment="Top" Width="120" />
-        <Button Content="Restart" Height="53" HorizontalAlignment="Left" Margin="1112,300,0,0" Name="button_restart" VerticalAlignment="Top" Width="120" />
+        <GroupBox Header="Select parameters" Height="116" HorizontalAlignment="Left" Margin="355,9,0,0" Name="groupBox_parameter" VerticalAlignment="Top" Width="725" FontFamily=" Century Gothic" FontWeight="Bold" Foreground="White">
+            <Label Height="27" Name="label_c" Width="67" Foreground="White" Margin="-50,50,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+        </GroupBox>
+        <Button Content="Calculate" Height="50" HorizontalAlignment="Left" Margin="1112,200,0,0" Name="button_calculate" VerticalAlignment="Top" Width="120" Click="button_calculate_Click" Background="#FF007CBF" FontFamily="Century Gothic" FontWeight="Bold" Foreground="White" />
+        <Button Content="Restart" Height="53" HorizontalAlignment="Left" Margin="1112,300,0,0" Name="button_restart" VerticalAlignment="Top" Width="120" Background="#FF007CBF" FontFamily="Century Gothic" FontWeight="Bold" Foreground="White" Click="button_restart_Click" />
         <ComboBox Height="27" HorizontalAlignment="Left" Margin="532,131,0,0" Name="comboBox_selectgrid" VerticalAlignment="Top" Width="121" SelectionChanged="comboBox_selectgrid_SelectionChanged" />
-        <Button Content="Save" Height="54" HorizontalAlignment="Left" Margin="1112,403,0,0" Name="button_save" VerticalAlignment="Top" Width="120" />
-        <Button Content="Open" Height="54" HorizontalAlignment="Left" Margin="1112,497,0,0" Name="button_open" VerticalAlignment="Top" Width="118" />
+        <Button Content="Save" Height="54" HorizontalAlignment="Left" Margin="1112,403,0,0" Name="button_save" VerticalAlignment="Top" Width="120" Background="#FF007CBF" FontFamily="Century Gothic" FontWeight="Bold" Foreground="White" />
+        <Button Content="Open" Height="54" HorizontalAlignment="Left" Margin="1112,497,0,0" Name="button_open" VerticalAlignment="Top" Width="118" Background="#FF007CBF" FontFamily="Century Gothic" FontWeight="Bold" Foreground="White" />
         <Canvas Height="390" HorizontalAlignment="Left" Margin="355,173,0,0" Name="canvas1" VerticalAlignment="Top" Width="700" Background="White" Visibility="Hidden" />
         <Grid Height="390" HorizontalAlignment="Left" Margin="355,173,0,0" Name="grid_v" VerticalAlignment="Top" Width="700">
             <Grid.Background>
@@ -45,8 +47,87 @@
                 <SolidColorBrush />
             </Grid.Background>
         </Grid>
-        <Label Content="Label" Height="30" HorizontalAlignment="Left" Margin="355,569,0,0" Name="label_information" VerticalAlignment="Top" Width="700" Foreground="White" FontFamily="Century Gothic" />
+        <Label Content="Label" Height="30" HorizontalAlignment="Left" Margin="355,569,0,0" Name="label_information" VerticalAlignment="Top" Width="700" Foreground="White" FontFamily="Century Gothic" HorizontalContentAlignment="Center" />
         <Image Height="50" HorizontalAlignment="Left" Margin="12.5,50,0,0" Name="image_title1" Stretch="Fill" VerticalAlignment="Top" Width="225" Source="file:///C:/Users/Lucas/Documents/UNI/QUART/1erQUADRI/SIMULACIÓ/PrandtlMeyer_ExpansionWave/PrandtlMeyer/WPF/Images/Title1.png" />
         <Image Height="30" HorizontalAlignment="Left" Margin="12.5,105,0,0" Name="image_title2" Stretch="Fill" VerticalAlignment="Top" Width="225" Source="/WPF;component/Images/Title2.png" />
+        <Label Content="Columns: " Height="30" HorizontalAlignment="Left" Margin="385,65,0,0" Name="label_columns" VerticalAlignment="Top" Width="67" Foreground="White" />
+        <Label Content="Rows: " Height="30" HorizontalAlignment="Left" Margin="385,35,0,0" Name="label_rows" VerticalAlignment="Top" Width="67" Foreground="White" />
+        <!--<Label Content="u: " Height="30" HorizontalAlignment="Left" Margin="520,25,0,0" Name="label_u" VerticalAlignment="Top" Width="30" Foreground="White" />
+        <Label Content="v: " Height="30" HorizontalAlignment="Left" Margin="520,50,0,0" Name="label_v" VerticalAlignment="Top" Width="30" Foreground="White" />
+        <Label Content="a: " Height="30" HorizontalAlignment="Left" Margin="520,75,0,0" Name="label_a" VerticalAlignment="Top" Width="30" Foreground="White" />-->
+        <Label Content="P: " Height="30" HorizontalAlignment="Left" Margin="520,50,0,0" Name="label_P" VerticalAlignment="Top" Width="30" Foreground="White" />
+        <Label Content="ρ: " Height="30" HorizontalAlignment="Left" Margin="520,25,0,0" Name="label_rho" VerticalAlignment="Top" Width="30" Foreground="White" />
+        <Label Content="M: " Height="30" HorizontalAlignment="Left" Margin="655,25,0,0" Name="label_M" VerticalAlignment="Top" Width="30" Foreground="White" />
+        <Label Content="R: " Height="30" HorizontalAlignment="Left" Margin="655,50,0,0" Name="label_R" VerticalAlignment="Top" Width="30" Foreground="White" />
+        <Label Content="ɣ: " Height="30" HorizontalAlignment="Left" Margin="655,75,0,0" Name="label_Gamma" VerticalAlignment="Top" Width="30" Foreground="White" />
+        <Label Content="E: " Height="30" HorizontalAlignment="Left" Margin="790,35,0,0" Name="label_E" VerticalAlignment="Top" Width="30" Foreground="White" />
+        <Label Content="θ: " Height="30" HorizontalAlignment="Left" Margin="790,65,0,0" Name="label_theta" VerticalAlignment="Top" Width="30" Foreground="White" />
+        <Label Content="T: " Height="30" HorizontalAlignment="Left" Margin="520,75,0,0" Name="label_T" VerticalAlignment="Top" Width="30" Foreground="White" />
+        <TextBox HorizontalAlignment="Left" Margin="450,35,0,0" Name="textBox_rows" Width="66" Foreground="White" VerticalContentAlignment="Center" Height="25" VerticalAlignment="Top">
+            <TextBox.Background>
+                <SolidColorBrush />
+            </TextBox.Background>
+        </TextBox>
+        <TextBox Height="25" HorizontalAlignment="Left" Margin="450,65,0,0" Name="textBox_columns" VerticalAlignment="Top" Width="66" Foreground="White" VerticalContentAlignment="Center">
+            <TextBox.Background>
+                <SolidColorBrush />
+            </TextBox.Background>
+        </TextBox>
+        <!--<TextBox Height="25" HorizontalAlignment="Left" Margin="540,30,0,0" Name="textBox_u" VerticalAlignment="Top" Width="66" Foreground="White" VerticalContentAlignment="Center">
+            <TextBox.Background>
+                <SolidColorBrush />
+            </TextBox.Background>
+        </TextBox>
+        <TextBox Height="25" HorizontalAlignment="Left" Margin="540,55,0,0" Name="textBox_v" VerticalAlignment="Top" Width="66" Foreground="White" VerticalContentAlignment="Center">
+            <TextBox.Background>
+                <SolidColorBrush />
+            </TextBox.Background>
+        </TextBox>
+        <TextBox Height="25" HorizontalAlignment="Left" Margin="540,80,0,0" Name="textBox_a" VerticalAlignment="Top" Width="66" Foreground="White" VerticalContentAlignment="Center">
+            <TextBox.Background>
+                <SolidColorBrush />
+            </TextBox.Background>
+        </TextBox>-->
+        <TextBox HorizontalAlignment="Left" Margin="540,25,0,0" Name="textBox_P" Width="66" Height="25" VerticalAlignment="Top" Foreground="White" VerticalContentAlignment="Center">
+            <TextBox.Background>
+                <SolidColorBrush />
+            </TextBox.Background>
+        </TextBox>
+        <TextBox Height="25" HorizontalAlignment="Left" Margin="540,50,0,0" Name="textBox_rho" VerticalAlignment="Top" Width="66" Foreground="White" VerticalContentAlignment="Center">
+            <TextBox.Background>
+                <SolidColorBrush />
+            </TextBox.Background>
+        </TextBox>
+        <TextBox Height="25" HorizontalAlignment="Left" Margin="540,75,0,0" Name="textBox_T" VerticalAlignment="Top" Width="66" Foreground="White" VerticalContentAlignment="Center">
+            <TextBox.Background>
+                <SolidColorBrush />
+            </TextBox.Background>
+        </TextBox>
+        <TextBox Height="25" HorizontalAlignment="Left" Margin="675,25,0,0" Name="textBox_M" VerticalAlignment="Top" Width="66" Foreground="White" VerticalContentAlignment="Center">
+            <TextBox.Background>
+                <SolidColorBrush />
+            </TextBox.Background>
+        </TextBox>
+        <TextBox Height="25" HorizontalAlignment="Left" Margin="675,50,0,0" Name="textBox_R" VerticalAlignment="Top" Width="66" Foreground="White" VerticalContentAlignment="Center">
+            <TextBox.Background>
+                <SolidColorBrush />
+            </TextBox.Background>
+        </TextBox>
+        <TextBox Height="25" HorizontalAlignment="Left" Margin="675,75,0,0" Name="textBox_gamma" VerticalAlignment="Top" Width="66" Foreground="White" VerticalContentAlignment="Center">
+            <TextBox.Background>
+                <SolidColorBrush />
+            </TextBox.Background>
+        </TextBox>
+        <TextBox Height="25" HorizontalAlignment="Left" Margin="810,35,0,0" Name="textBox_E" VerticalAlignment="Top" Width="66" Foreground="White" VerticalContentAlignment="Center">
+            <TextBox.Background>
+                <SolidColorBrush />
+            </TextBox.Background>
+        </TextBox>
+        <TextBox Height="25" HorizontalAlignment="Left" Margin="810,65,0,0" Name="textBox_theta" VerticalAlignment="Top" Width="66" Foreground="White" VerticalContentAlignment="Center">
+            <TextBox.Background>
+                <SolidColorBrush />
+            </TextBox.Background>
+        </TextBox>
+        <Button Content="Default parametes" Height="37" HorizontalAlignment="Left" Margin="920,50,0,0" Name="button_default" VerticalAlignment="Top" Width="117" Foreground="White" Background="#FF007CBF" FontFamily="Century Gothic" Click="button_default_Click" />
     </Grid>
 </Window>
