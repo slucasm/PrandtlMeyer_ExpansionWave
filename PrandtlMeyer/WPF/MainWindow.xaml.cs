@@ -25,6 +25,8 @@ namespace WPF
             InitializeComponent();
         }
 
+        Matriz matrix = new Matriz();
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             
@@ -88,14 +90,14 @@ namespace WPF
 
         private void button_simulation_Click(object sender, RoutedEventArgs e)
         {
-            Simulation simulation = new Simulation();
+            Simulation simulation = new Simulation(matrix);
             simulation.Show();
             this.Hide();
         }
 
         private void button_tableresults_Click(object sender, RoutedEventArgs e)
         {
-            Tables tables = new Tables();
+            Tables tables = new Tables(matrix);
             tables.Show();
             this.Hide();
         }

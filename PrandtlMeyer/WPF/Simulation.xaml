@@ -46,5 +46,7 @@
             </Grid.Background>
         </Grid>
         <Label Content="Label" Height="30" HorizontalAlignment="Left" Margin="355,569,0,0" Name="label_information" VerticalAlignment="Top" Width="700" Foreground="White" FontFamily="Century Gothic" />
+        <Image Height="50" HorizontalAlignment="Left" Margin="12.5,50,0,0" Name="image_title1" Stretch="Fill" VerticalAlignment="Top" Width="225" Source="file:///C:/Users/Lucas/Documents/UNI/QUART/1erQUADRI/SIMULACIÓ/PrandtlMeyer_ExpansionWave/PrandtlMeyer/WPF/Images/Title1.png" />
+        <Image Height="30" HorizontalAlignment="Left" Margin="12.5,105,0,0" Name="image_title2" Stretch="Fill" VerticalAlignment="Top" Width="225" Source="/WPF;component/Images/Title2.png" />
     </Grid>
 </Window>

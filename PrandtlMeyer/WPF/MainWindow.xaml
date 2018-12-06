@@ -8,6 +8,7 @@
         <Button Content="Simulation" Height="50" HorizontalAlignment="Left" Margin="0,200,0,0" Name="button_simulation" VerticalAlignment="Top" Width="250" Foreground="White" Background="#FF007CBF" BorderBrush="#FF007CBF" BorderThickness="0" FontFamily="Century Gothic" FontWeight="Bold" Click="button_simulation_Click" />
         <Button Content="Tables with results" Height="50" HorizontalAlignment="Left" Margin="0,250,0,0" Name="button_tableresults" VerticalAlignment="Top" Width="250" Foreground="White" Background="#FF007CBF" BorderThickness="0" FontFamily="Century Gothic" FontWeight="Bold" Click="button_tableresults_Click" />
         <Button Content="Close" Height="50" HorizontalAlignment="Left" Margin="0,300,0,0" Name="button_close" VerticalAlignment="Top" Width="250" Foreground="White" Background="#FF007CBF" BorderThickness="0" FontFamily="Century Gothic" FontWeight="Bold" Click="button_close_Click" />
-     
+        <Image Height="50" HorizontalAlignment="Left" Margin="12.5,50,0,0" Name="image_title1" Stretch="Fill" VerticalAlignment="Top" Width="225" Source="file:///C:/Users/Lucas/Documents/UNI/QUART/1erQUADRI/SIMULACIÓ/PrandtlMeyer_ExpansionWave/PrandtlMeyer/WPF/Images/Title1.png" />
+        <Image Height="30" HorizontalAlignment="Left" Margin="12.5,105,0,0" Name="image_title2" Stretch="Fill" VerticalAlignment="Top" Width="225" Source="/WPF;component/Images/Title2.png" />
     </Grid>
 </Window>

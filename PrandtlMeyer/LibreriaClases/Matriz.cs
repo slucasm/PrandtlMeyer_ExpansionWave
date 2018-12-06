@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Shapes;
+using System.Data;
+using System.Windows.Controls;
 
 namespace LibreriaClases
 {
@@ -34,6 +36,13 @@ namespace LibreriaClases
 
         double delta_x;
         double delta_y;
+
+        DataTable table_u = new DataTable();
+        DataTable table_v = new DataTable();
+        DataTable table_rho = new DataTable();
+        DataTable table_P = new DataTable();
+        DataTable table_T = new DataTable();
+        DataTable table_M = new DataTable();
 
         List<Cell> listCells = new List<Cell>();
         
@@ -246,6 +255,68 @@ namespace LibreriaClases
         public List<Cell> getListCells()
         {
             return listCells;
+        }
+
+        public List<DataTable> createTables()
+        {
+
+            for (int i = 0; i < columns; i++)
+            {
+               
+                DataColumn index_u = new DataColumn(Convert.ToString(i), typeof(double));
+                DataColumn index_v = new DataColumn(Convert.ToString(i), typeof(double));
+                DataColumn index_rho = new DataColumn(Convert.ToString(i), typeof(double));
+                DataColumn index_P = new DataColumn(Convert.ToString(i), typeof(double));
+                DataColumn index_T = new DataColumn(Convert.ToString(i), typeof(double));
+                DataColumn index_M = new DataColumn(Convert.ToString(i), typeof(double));
+
+                table_u.Columns.Add(index_u);
+                table_v.Columns.Add(index_v);
+                table_rho.Columns.Add(index_rho);
+                table_P.Columns.Add(index_P);
+                table_T.Columns.Add(index_T);
+                table_M.Columns.Add(index_M);
+
+            }
+            for (int i = 0; i < rows; i++)
+            {
+                DataRow row_u = table_u.NewRow();
+                DataRow row_v = table_v.NewRow();
+                DataRow row_rho = table_rho.NewRow();
+                DataRow row_P = table_P.NewRow();
+                DataRow row_T = table_T.NewRow();
+                DataRow row_M = table_M.NewRow();
+
+                
+
+                for (int j = 0; j < columns; j++)
+                {
+                    
+                    row_u[j] = Math.Round(matrix[i, j].u,3);
+                    row_v[j] = Math.Round(matrix[i, j].v,3);
+                    row_rho[j] = Math.Round(matrix[i, j].Rho,3);
+                    row_P[j] = Math.Round(matrix[i, j].P,3);
+                    row_T[j] = Math.Round(matrix[i, j].T,3);
+                    row_M[j] = Math.Round(matrix[i, j].M,3);
+                }
+                table_u.Rows.Add(row_u);
+                table_v.Rows.Add(row_v);
+                table_rho.Rows.Add(row_rho);
+                table_P.Rows.Add(row_P);
+                table_T.Rows.Add(row_T);
+                table_M.Rows.Add(row_M);
+            }
+
+            List<DataTable> listTables = new List<DataTable>();
+            listTables.Add(table_u);
+            listTables.Add(table_v);
+            listTables.Add(table_rho);
+            listTables.Add(table_P);
+            listTables.Add(table_T);
+            listTables.Add(table_M);
+
+            return listTables;
+
         }
 
         /**

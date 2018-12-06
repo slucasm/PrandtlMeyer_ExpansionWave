@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using LibreriaClases;
+using System.Data;
 
 namespace WPF
 {
@@ -19,9 +20,10 @@ namespace WPF
     /// </summary>
     public partial class Simulation : Window
     {
-        public Simulation()
+        public Simulation(Matriz matrix)
         {
             InitializeComponent();
+            this.matrix = matrix;
         }
 
         List<Polygon> listPolygons_u = new List<Polygon>();
@@ -31,7 +33,16 @@ namespace WPF
         List<Polygon> listPolygons_T = new List<Polygon>();
         List<Polygon> listPolygons_M = new List<Polygon>();
 
+        DataTable table_u = new DataTable();
+        DataTable table_v = new DataTable();
+        DataTable table_rho = new DataTable();
+        DataTable table_P = new DataTable();
+        DataTable table_T = new DataTable();
+        DataTable table_M = new DataTable();
+
         List<Cell> listCells = new List<Cell>();
+
+        Matriz matrix = new Matriz();
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -45,7 +56,6 @@ namespace WPF
 
             label_information.Content = ("u:        v:      rho:        P:      T:      M:");
 
-            Matriz matrix = new Matriz();
             matrix.Initialize();
             matrix.calculate();
             matrix.calculatePoligons();
@@ -113,7 +123,7 @@ namespace WPF
 
         private void button_tableresults_Click(object sender, RoutedEventArgs e)
         {
-            Tables tables = new Tables();
+            Tables tables = new Tables(matrix);
             tables.Show();
             this.Hide();
         }

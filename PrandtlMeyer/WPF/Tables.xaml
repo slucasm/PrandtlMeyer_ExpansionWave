@@ -1,18 +1,21 @@
 ﻿<Window x:Class="WPF.Tables"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Tables" Height="650" Width="1300" Background="#FF2D2D30" WindowStyle="None" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="Tables" Height="650" Width="1300" Background="#FF2D2D30" WindowStyle="None" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Loaded="Window_Loaded">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="936*" />
-            <ColumnDefinition Width="342*" />
-        </Grid.ColumnDefinitions>
         <Rectangle Fill="#FF007CBF" Height="650" HorizontalAlignment="Left" Name="rectangle" Stroke="#FF007CBF" VerticalAlignment="Top" Width="250" />
         <Button Background="#FF007CBF" BorderThickness="0" Content="Introduction" FontFamily="Century Gothic,12pt" FontWeight="Bold" Foreground="White" Height="50" HorizontalAlignment="Left" Margin="0,150,0,0" Name="button_introduction" VerticalAlignment="Top" Width="250" Click="button_introduction_Click" />
         <Button Background="#FF007CBF" BorderBrush="#FF007CBF" BorderThickness="0" Content="Simulation" FontFamily="Century Gothic" FontWeight="Bold" Foreground="White" Height="50" HorizontalAlignment="Left" Margin="0,200,0,0" Name="button_simulation" VerticalAlignment="Top" Width="250" Click="button_simulation_Click" />
         <Button Background="#FF2D2D30" BorderThickness="0" Content="Tables with results" FontFamily="Century Gothic" FontWeight="Bold" Foreground="White" Height="50" HorizontalAlignment="Left" Margin="0,250,0,0" Name="button_tableresults" VerticalAlignment="Top" Width="250" BorderBrush="#FF2D2D30" />
         <Button Background="#FF007CBF" BorderThickness="0" Content="Close" FontFamily="Century Gothic" FontWeight="Bold" Foreground="White" Height="50" HorizontalAlignment="Left" Margin="0,300,0,0" Name="button_close" VerticalAlignment="Top" Width="250" Click="button_close_Click" />
-        <Grid Grid.ColumnSpan="2" Height="408" HorizontalAlignment="Left" Margin="371,124,0,0" Name="grid1" VerticalAlignment="Top" Width="776" Background="White" />
-        <ComboBox Height="36" HorizontalAlignment="Left" Margin="607,48,0,0" Name="comboBox_selectgrid" VerticalAlignment="Top" Width="184" />
+        <ComboBox Height="36" HorizontalAlignment="Left" Margin="607,48,0,0" Name="comboBox_selectgrid" VerticalAlignment="Top" Width="184" SelectionChanged="comboBox_selectgrid_SelectionChanged" FontFamily="Century Gothic" />                        
+        <DataGrid AutoGenerateColumns="True" Height="400" HorizontalAlignment="Left" Margin="371,124,0,0" Name="grid_u" VerticalAlignment="Top" Width="775" SelectionUnit="Cell" />
+        <DataGrid AutoGenerateColumns="True" Height="400" HorizontalAlignment="Left" Margin="371,124,0,0" Name="grid_v" VerticalAlignment="Top" Width="775" Visibility="Hidden" SelectionUnit="Cell" />
+        <DataGrid AutoGenerateColumns="True" Height="400" HorizontalAlignment="Left" Margin="371,124,0,0" Name="grid_rho" VerticalAlignment="Top" Width="775" Visibility="Hidden" SelectionUnit="Cell" />
+        <DataGrid AutoGenerateColumns="True" Height="400" HorizontalAlignment="Left" Margin="371,124,0,0" Name="grid_P" VerticalAlignment="Top" Width="775" Visibility="Hidden" SelectionUnit="Cell" />
+        <DataGrid AutoGenerateColumns="True" Height="400" HorizontalAlignment="Left" Margin="371,124,0,0" Name="grid_T" VerticalAlignment="Top" Width="775" Visibility="Hidden" SelectionUnit="Cell" />
+        <DataGrid AutoGenerateColumns="True" Height="400" HorizontalAlignment="Left" Margin="371,124,0,0" Name="grid_M" VerticalAlignment="Top" Width="775" Visibility="Hidden" SelectionUnit="Cell" />
+        <Image Height="50" HorizontalAlignment="Left" Margin="12.5,50,0,0" Name="image_title1" Stretch="Fill" VerticalAlignment="Top" Width="225" Source="file:///C:/Users/Lucas/Documents/UNI/QUART/1erQUADRI/SIMULACIÓ/PrandtlMeyer_ExpansionWave/PrandtlMeyer/WPF/Images/Title1.png" />
+        <Image Height="30" HorizontalAlignment="Left" Margin="12.5,105,0,0" Name="image_title2" Stretch="Fill" VerticalAlignment="Top" Width="225" Source="/WPF;component/Images/Title2.png" />
     </Grid>
 </Window>
