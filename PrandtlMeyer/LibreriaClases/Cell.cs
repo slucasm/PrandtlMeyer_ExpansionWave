@@ -338,7 +338,7 @@ namespace LibreriaClases
         public void calculatePoligon_u(double up_left_X, double up_left_Y, double up_right_X, double up_right_Y, double down_left_X, double down_left_Y, double down_right_X, double down_right_Y)
         {
             polygon_u.Stroke = Brushes.Transparent;
-            polygon_u.Fill = Brushes.Blue;
+            //polygon_u.Fill = Brushes.Blue;
             polygon_u.StrokeThickness = 0;
             PointCollection pointCollection = new PointCollection();
             Point point1 = new Point(up_left_X * 7.5, up_left_Y * 7.5);
@@ -358,7 +358,7 @@ namespace LibreriaClases
         public void calculatePoligon_v(double up_left_X, double up_left_Y, double up_right_X, double up_right_Y, double down_left_X, double down_left_Y, double down_right_X, double down_right_Y)
         {
             polygon_v.Stroke = Brushes.Transparent;
-            polygon_v.Fill = Brushes.White;
+            //polygon_v.Fill = Brushes.White;
             polygon_v.StrokeThickness = 0;
             PointCollection pointCollection = new PointCollection();
             Point point1 = new Point(up_left_X * 7.5, up_left_Y * 7.5);
@@ -378,7 +378,7 @@ namespace LibreriaClases
         public void calculatePoligon_rho(double up_left_X, double up_left_Y, double up_right_X, double up_right_Y, double down_left_X, double down_left_Y, double down_right_X, double down_right_Y)
         {
             polygon_rho.Stroke = Brushes.Transparent;
-            polygon_rho.Fill = Brushes.Black;
+            //polygon_rho.Fill = Brushes.Black;
             polygon_rho.StrokeThickness = 0;
             PointCollection pointCollection = new PointCollection();
             Point point1 = new Point(up_left_X * 7.5, up_left_Y * 7.5);
@@ -399,7 +399,7 @@ namespace LibreriaClases
         public void calculatePoligon_P(double up_left_X, double up_left_Y, double up_right_X, double up_right_Y, double down_left_X, double down_left_Y, double down_right_X, double down_right_Y)
         {
             polygon_P.Stroke = Brushes.Transparent;
-            polygon_P.Fill = Brushes.Pink;
+            //polygon_P.Fill = Brushes.Pink;
             polygon_P.StrokeThickness = 0;
             PointCollection pointCollection = new PointCollection();
             Point point1 = new Point(up_left_X * 7.5, up_left_Y * 7.5);
@@ -420,7 +420,7 @@ namespace LibreriaClases
         public void calculatePoligon_T(double up_left_X, double up_left_Y, double up_right_X, double up_right_Y, double down_left_X, double down_left_Y, double down_right_X, double down_right_Y)
         {
             polygon_T.Stroke = Brushes.Transparent;
-            polygon_T.Fill = Brushes.Green;
+            //polygon_T.Fill = Brushes.Green;
             polygon_T.StrokeThickness = 0;
             PointCollection pointCollection = new PointCollection();
             Point point1 = new Point(up_left_X * 7.5, up_left_Y * 7.5);
@@ -441,7 +441,7 @@ namespace LibreriaClases
         public void calculatePoligon_M(double up_left_X, double up_left_Y, double up_right_X, double up_right_Y, double down_left_X, double down_left_Y, double down_right_X, double down_right_Y)
         {
             polygon_M.Stroke = Brushes.Transparent;
-            polygon_M.Fill = Brushes.Yellow;
+            //polygon_M.Fill = Brushes.Yellow;
             polygon_M.StrokeThickness = 0;
             PointCollection pointCollection = new PointCollection();
             Point point1 = new Point(up_left_X * 7.5, up_left_Y * 7.5);
@@ -458,6 +458,402 @@ namespace LibreriaClases
 
             polygon_M.Points = pointCollection;
         }
+
+
+        public void colorPolygon_u(double min, double max)
+        {
+            double incremento = Math.Abs(max - min);
+            double porcentage = ((u-min) / incremento) * 100;
+            if (porcentage == 0)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ffffff"));
+                polygon_u.Fill = brush;
+            }
+            else if (porcentage > 0 && porcentage < 10)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#e6ffe6"));
+                polygon_u.Fill = brush;
+            }
+            else if (porcentage > 10 && porcentage < 20)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ccffcc"));
+                polygon_u.Fill = brush;
+            }
+            else if (porcentage > 20 && porcentage < 30)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#b3ffb3"));
+                polygon_u.Fill = brush;
+            }
+            else if (porcentage > 30 && porcentage < 40)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#99ff99"));
+                polygon_u.Fill = brush;
+            }
+            else if (porcentage > 40 && porcentage < 50)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#80ff80"));
+                polygon_u.Fill = brush;
+            }
+            else if (porcentage > 50 && porcentage < 60)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#66ff66"));
+                polygon_u.Fill = brush;
+            }
+            else if (porcentage > 60 && porcentage < 70)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4dff4d"));
+                polygon_u.Fill = brush;
+            }
+            else if (porcentage > 70 && porcentage < 80)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#33ff33"));
+                polygon_u.Fill = brush;
+            }
+            else if (porcentage > 80 && porcentage < 90)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#1aff1a"));
+                polygon_u.Fill = brush;
+            }
+            else if (porcentage > 90 && porcentage < 100)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#00ff00"));
+                polygon_u.Fill = brush;
+            }
+            else if (porcentage == 100)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#00e600"));
+                polygon_u.Fill = brush;
+            }
+
+        }
+        public void colorPolygon_v(double min, double max)
+        {
+            double incremento = Math.Abs(max - min);
+            double porcentage = ((v-min) / incremento) * 100;
+            if (porcentage == 0)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ffffff"));
+                polygon_v.Fill = brush;
+            }
+            else if (porcentage > 0 && porcentage < 10)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#e6f0ff"));
+                polygon_v.Fill = brush;
+            }
+            else if (porcentage > 10 && porcentage < 20)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#cce0ff"));
+                polygon_v.Fill = brush;
+            }
+            else if (porcentage > 20 && porcentage < 30)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#b3d1ff"));
+                polygon_v.Fill = brush;
+            }
+            else if (porcentage > 30 && porcentage < 40)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#b3d1ff"));
+                polygon_v.Fill = brush;
+            }
+            else if (porcentage > 40 && porcentage < 50)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#80b3ff"));
+                polygon_v.Fill = brush;
+            }
+            else if (porcentage > 50 && porcentage < 60)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#66a3ff"));
+                polygon_v.Fill = brush;
+            }
+            else if (porcentage > 60 && porcentage < 70)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4d94ff"));
+                polygon_v.Fill = brush;
+            }
+            else if (porcentage > 70 && porcentage < 80)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#3385ff"));
+                polygon_v.Fill = brush;
+            }
+            else if (porcentage > 80 && porcentage < 90)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#1a75ff"));
+                polygon_v.Fill = brush;
+            }
+            else if (porcentage > 90 && porcentage < 100)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#0066ff"));
+                polygon_v.Fill = brush;
+            }
+            else if (porcentage == 100)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#005ce6"));
+                polygon_v.Fill = brush;
+            }
+        }
+        public void colorPolygon_rho(double min, double max)
+        {
+            double incremento = Math.Abs(max - min);
+            double porcentage = ((Rho-min) / incremento) * 100;
+            if (porcentage == 0)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ffffff"));
+                polygon_rho.Fill = brush;
+            }
+            else if (porcentage > 0 && porcentage < 10)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#fffae6"));
+                polygon_rho.Fill = brush;
+            }
+            else if (porcentage > 10 && porcentage < 20)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#fff5cc"));
+                polygon_rho.Fill = brush;
+            }
+            else if (porcentage > 20 && porcentage < 30)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#fff0b3"));
+                polygon_rho.Fill = brush;
+            }
+            else if (porcentage > 30 && porcentage < 40)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ffeb99"));
+                polygon_rho.Fill = brush;
+            }
+            else if (porcentage > 40 && porcentage < 50)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ffe680"));
+                polygon_rho.Fill = brush;
+            }
+            else if (porcentage > 50 && porcentage < 60)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ffe066"));
+                polygon_rho.Fill = brush;
+            }
+            else if (porcentage > 60 && porcentage < 70)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ffdb4d"));
+                polygon_rho.Fill = brush;
+            }
+            else if (porcentage > 70 && porcentage < 80)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ffd633"));
+                polygon_rho.Fill = brush;
+            }
+            else if (porcentage > 80 && porcentage < 90)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ffd11a"));
+                polygon_rho.Fill = brush;
+            }
+            else if (porcentage > 90 && porcentage < 100)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ffcc00"));
+                polygon_rho.Fill = brush;
+            }
+            else if (porcentage == 100)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#e6b800"));
+                polygon_rho.Fill = brush;
+            }
+        }
+        public void colorPolygon_P(double min, double max)
+        {
+            double incremento = Math.Abs(max - min);
+            double porcentage = ((P-min) / incremento) * 100;
+            if (porcentage == 0)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ffffff"));
+                polygon_P.Fill = brush;
+            }
+            else if (porcentage > 0 && porcentage < 10)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ffe6f0"));
+                polygon_P.Fill = brush;
+            }
+            else if (porcentage > 10 && porcentage < 20)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ffcce0"));
+                polygon_P.Fill = brush;
+            }
+            else if (porcentage > 20 && porcentage < 30)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ffb3d1"));
+                polygon_P.Fill = brush;
+            }
+            else if (porcentage > 30 && porcentage < 40)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ff99c2"));
+                polygon_P.Fill = brush;
+            }
+            else if (porcentage > 40 && porcentage < 50)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ff80b3"));
+                polygon_P.Fill = brush;
+            }
+            else if (porcentage > 50 && porcentage < 60)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ff66a3"));
+                polygon_P.Fill = brush;
+            }
+            else if (porcentage > 60 && porcentage < 70)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ff4d94"));
+                polygon_P.Fill = brush;
+            }
+            else if (porcentage > 70 && porcentage < 80)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ff3385"));
+                polygon_P.Fill = brush;
+            }
+            else if (porcentage > 80 && porcentage < 90)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ff1a75"));
+                polygon_P.Fill = brush;
+            }
+            else if (porcentage > 90 && porcentage < 100)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ff0066"));
+                polygon_P.Fill = brush;
+            }
+            else if (porcentage == 100)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#e6005c"));
+                polygon_P.Fill = brush;
+            }
+        }
+        public void colorPolygon_T(double min, double max)
+        {
+            double incremento = Math.Abs(max - min);
+            double porcentage = ((T-min) / incremento) * 100;
+            if (porcentage == 0)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ffffff"));
+                polygon_T.Fill = brush;
+            }
+            else if (porcentage > 0 && porcentage < 10)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ffe6e6"));
+                polygon_T.Fill = brush;
+            }
+            else if (porcentage > 10 && porcentage < 20)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ffcccc"));
+                polygon_T.Fill = brush;
+            }
+            else if (porcentage > 20 && porcentage < 30)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ffb3b3"));
+                polygon_T.Fill = brush;
+            }
+            else if (porcentage > 30 && porcentage < 40)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ff9999"));
+                polygon_T.Fill = brush;
+            }
+            else if (porcentage > 40 && porcentage < 50)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ff8080"));
+                polygon_T.Fill = brush;
+            }
+            else if (porcentage > 50 && porcentage < 60)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ff6666"));
+                polygon_T.Fill = brush;
+            }
+            else if (porcentage > 60 && porcentage < 70)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ff4d4d"));
+                polygon_T.Fill = brush;
+            }
+            else if (porcentage > 70 && porcentage < 80)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ff3333"));
+                polygon_T.Fill = brush;
+            }
+            else if (porcentage > 80 && porcentage < 90)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ff1a1a"));
+                polygon_T.Fill = brush;
+            }
+            else if (porcentage > 90 && porcentage < 100)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ff0000"));
+                polygon_T.Fill = brush;
+            }
+            else if (porcentage == 100)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#e60000"));
+                polygon_T.Fill = brush;
+            }
+        }
+        public void colorPolygon_M(double min, double max)
+        {
+            double incremento = Math.Abs(max - min);
+            double porcentage = ((M-min) / incremento) * 100;
+            if (porcentage == 0)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ffffff"));
+                polygon_M.Fill = brush;
+            }
+            else if (porcentage > 0 && porcentage < 10)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#f9f2ec"));
+                polygon_M.Fill = brush;
+            }
+            else if (porcentage > 10 && porcentage < 20)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#f2e6d9"));
+                polygon_M.Fill = brush;
+            }
+            else if (porcentage > 20 && porcentage < 30)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ecd9c6"));
+                polygon_M.Fill = brush;
+            }
+            else if (porcentage > 30 && porcentage < 40)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#e6ccb3"));
+                polygon_M.Fill = brush;
+            }
+            else if (porcentage > 40 && porcentage < 50)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#dfbf9f"));
+                polygon_M.Fill = brush;
+            }
+            else if (porcentage > 50 && porcentage < 60)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#d9b38c"));
+                polygon_M.Fill = brush;
+            }
+            else if (porcentage > 60 && porcentage < 70)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#d2a679"));
+                polygon_M.Fill = brush;
+            }
+            else if (porcentage > 70 && porcentage < 80)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#cc9966"));
+                polygon_M.Fill = brush;
+            }
+            else if (porcentage > 80 && porcentage < 90)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#c68c53"));
+                polygon_M.Fill = brush;
+            }
+            else if (porcentage > 90 && porcentage < 100)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#bf8040"));
+                polygon_M.Fill = brush;
+            }
+            else if (porcentage == 100)
+            {
+                SolidColorBrush brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ac7339"));
+                polygon_M.Fill = brush;
+            }
+        }
+
+
+
         /*public Cell(double M, double P, double rho, double T,double gamma)
         {
             this.M = M;

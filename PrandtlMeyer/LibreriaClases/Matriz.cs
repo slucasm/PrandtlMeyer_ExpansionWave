@@ -239,9 +239,103 @@ namespace LibreriaClases
                 up_left_X = up_right_X;
                 down_left_X = down_right_X;
             }
+        }
 
+
+        public void colorPolygons()
+        {
+            List<Cell> listaCells = new List<Cell>();
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    listaCells.Add(matrix[i, j]);
+                }
+            }
+
+            double max_u = double.MinValue;
+            double max_v = double.MinValue;
+            double max_rho = double.MinValue;
+            double max_P = double.MinValue;
+            double max_T = double.MinValue;
+            double max_M = double.MinValue;
+            double min_u = double.MaxValue;
+            double min_v = double.MaxValue;
+            double min_rho = double.MaxValue;
+            double min_P = double.MaxValue;
+            double min_T = double.MaxValue;
+            double min_M = double.MaxValue;
+
+            foreach (Cell cell in listaCells)
+            {
+                if (cell.u > max_u)
+                {
+                    max_u = cell.u;
+                }
+                if (cell.v > max_v)
+                {
+                    max_v = cell.v;
+                }
+                if (cell.Rho > max_rho)
+                {
+                    max_rho = cell.Rho;
+                }
+                if (cell.P > max_P)
+                {
+                    max_P = cell.P;
+                }
+                if (cell.T > max_T)
+                {
+                    max_T = cell.T;
+                }
+                if (cell.M > max_M)
+                {
+                    max_M = cell.M;
+                }
+
+                if (cell.u < min_u)
+                {
+                    min_u = cell.u;
+                }
+                if (cell.v < min_v)
+                {
+                    min_v = cell.v;
+                }
+                if (cell.Rho < min_rho)
+                {
+                    min_rho = cell.Rho;
+                }
+                if (cell.P < min_P)
+                {
+                    min_P = cell.P;
+                }
+                if (cell.T < min_T)
+                {
+                    min_T = cell.T;
+                }
+                if (cell.M < min_M)
+                {
+                    min_M = cell.M;
+                }
+            }
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    matrix[i, j].colorPolygon_u(min_u, max_u);
+                    matrix[i, j].colorPolygon_v(min_v, max_v);
+                    matrix[i, j].colorPolygon_rho(min_rho, max_rho);
+                    matrix[i, j].colorPolygon_P(min_P, max_P);
+                    matrix[i, j].colorPolygon_T(min_T, max_T);
+                    matrix[i, j].colorPolygon_M(min_M, max_M);
+                }
+            }
+
+            
 
         }
+
 
         public List<List<Polygon>> getListPolygons()
         {
@@ -425,6 +519,11 @@ namespace LibreriaClases
 
             matrix = new Cell[rows, columns];
         }
+
+
+
+
+
 
         /**
            public List<Polygon> getListPolygon_u()

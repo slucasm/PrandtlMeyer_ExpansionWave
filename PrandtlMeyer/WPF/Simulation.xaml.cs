@@ -206,6 +206,7 @@ namespace WPF
                 matrix.Initialize();
                 matrix.calculate();
                 matrix.calculatePoligons();
+                matrix.colorPolygons();
                 List<List<Polygon>> listPolygons = matrix.getListPolygons();
                 listPolygons_u = listPolygons[0];
                 listPolygons_v = listPolygons[1];
