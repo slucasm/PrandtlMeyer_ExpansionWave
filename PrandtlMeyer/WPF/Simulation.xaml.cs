@@ -25,7 +25,9 @@ namespace WPF
             InitializeComponent();
             this.matrix = matrix;
         }
-       
+
+        Boolean isCalculatePressed = false;
+
         List<Polygon> listPolygons_u = new List<Polygon>();
         List<Polygon> listPolygons_v = new List<Polygon>();
         List<Polygon> listPolygons_rho = new List<Polygon>();
@@ -60,9 +62,11 @@ namespace WPF
 
             label_information.Content = ("u:        v:      rho:        P:      T:      M:");
 
-            
 
-
+            rectangle_gradient.Fill = new LinearGradientBrush( Color.FromRgb(255,255,255), Color.FromRgb(0,230,0),new Point(0, 0), new Point(1, 0));
+            rectangle_gradient.Visibility = Visibility.Hidden;
+            label_min.Visibility = Visibility.Hidden;
+            label_max.Visibility = Visibility.Hidden;
             
             
             
@@ -83,9 +87,17 @@ namespace WPF
 
         private void button_tableresults_Click(object sender, RoutedEventArgs e)
         {
-                Tables tables = new Tables(matrix, this,listTables);
+            if (isCalculatePressed == true)
+            {
+                Tables tables = new Tables(matrix, this, listTables);
                 tables.Show();
                 this.Hide();
+            }
+
+            else
+            {
+                MessageBox.Show("First you have to calculate your situation");
+            }
             
         }
 
@@ -104,6 +116,7 @@ namespace WPF
                 grid_P.Visibility = Visibility.Hidden;
                 grid_T.Visibility = Visibility.Hidden;
                 grid_M.Visibility = Visibility.Hidden;
+                rectangle_gradient.Fill = new LinearGradientBrush(Color.FromRgb(255, 255, 255), Color.FromRgb(0, 230, 0), new Point(0, 0), new Point(1, 0));
 
             }
             else if (comboBox_selectgrid.SelectedIndex == 1)
@@ -114,6 +127,8 @@ namespace WPF
                 grid_P.Visibility = Visibility.Hidden;
                 grid_T.Visibility = Visibility.Hidden;
                 grid_M.Visibility = Visibility.Hidden;
+                rectangle_gradient.Fill = new LinearGradientBrush(Color.FromRgb(255, 255, 255), Color.FromRgb(0, 92, 230), new Point(0, 0), new Point(1, 0));
+
             }
             else if (comboBox_selectgrid.SelectedIndex == 2)
             {
@@ -123,6 +138,7 @@ namespace WPF
                 grid_P.Visibility = Visibility.Hidden;
                 grid_T.Visibility = Visibility.Hidden;
                 grid_M.Visibility = Visibility.Hidden;
+                rectangle_gradient.Fill = new LinearGradientBrush(Color.FromRgb(255, 255, 255), Color.FromRgb(230, 184, 0), new Point(0, 0), new Point(1, 0));
             }
             else if (comboBox_selectgrid.SelectedIndex == 3)
             {
@@ -132,6 +148,7 @@ namespace WPF
                 grid_P.Visibility = Visibility.Visible;
                 grid_T.Visibility = Visibility.Hidden;
                 grid_M.Visibility = Visibility.Hidden;
+                rectangle_gradient.Fill = new LinearGradientBrush(Color.FromRgb(255, 255, 255), Color.FromRgb(230, 0, 92), new Point(0, 0), new Point(1, 0));
             }
             else if (comboBox_selectgrid.SelectedIndex == 4)
             {
@@ -141,6 +158,7 @@ namespace WPF
                 grid_P.Visibility = Visibility.Hidden;
                 grid_T.Visibility = Visibility.Visible;
                 grid_M.Visibility = Visibility.Hidden;
+                rectangle_gradient.Fill = new LinearGradientBrush(Color.FromRgb(255, 255, 255), Color.FromRgb(230, 0, 0), new Point(0, 0), new Point(1, 0));
             }
             else if (comboBox_selectgrid.SelectedIndex == 5)
             {
@@ -150,15 +168,8 @@ namespace WPF
                 grid_P.Visibility = Visibility.Hidden;
                 grid_T.Visibility = Visibility.Hidden;
                 grid_M.Visibility = Visibility.Visible;
+                rectangle_gradient.Fill = new LinearGradientBrush(Color.FromRgb(255, 255, 255), Color.FromRgb(172, 115, 57), new Point(0, 0), new Point(1, 0));
             }
-        }
-
-        private void grid_u_MouseEnter(object sender, MouseEventArgs e)
-        {
-            //for (int i = 0; i < listPolygons_u.Count; i++)
-            //{
-            //    listPolygons_u[i].MouseEnter += Polygon_MouseEnter;
-            //}
         }
 
         private void Polygon_MouseEnter(object sender, MouseEventArgs e)
@@ -188,8 +199,10 @@ namespace WPF
 
         private void button_calculate_Click(object sender, RoutedEventArgs e)
         {
-            if (textBox_columns.Text != "" && textBox_rows.Text != "" && textBox_rho.Text != "" && textBox_P.Text != "" && textBox_T.Text != "" && textBox_M.Text != "" && textBox_R.Text != "" && textBox_E.Text != "" && textBox_gamma.Text != "" && textBox_theta.Text != "")
+            if (textBox_columns.Text != "" && textBox_rows.Text != "" && textBox_rho.Text != "" && textBox_P.Text != "" && textBox_T.Text != "" && textBox_M.Text != "" && textBox_R.Text != "" && textBox_E.Text != "" && textBox_gamma.Text != "" && textBox_theta.Text != "" && isCalculatePressed == false)
             {
+                isCalculatePressed = true;
+
                 int rows = Convert.ToInt32(textBox_rows.Text);
                 int columns = Convert.ToInt32(textBox_columns.Text);
                 double rho = Convert.ToDouble(textBox_rho.Text);
@@ -253,6 +266,11 @@ namespace WPF
                 }
 
                 listTables = matrix.createTables();
+
+                rectangle_gradient.Visibility = Visibility.Visible;
+
+                label_min.Visibility = Visibility.Visible;
+                label_max.Visibility = Visibility.Visible;
             }
 
             else
@@ -291,11 +309,23 @@ namespace WPF
             textBox_E.Text = "";
             textBox_theta.Text = "";
 
+            rectangle_gradient.Visibility = Visibility.Hidden;
+            label_min.Visibility = Visibility.Hidden;
+            label_max.Visibility = Visibility.Hidden;
+            isCalculatePressed = false;
+
         }
 
         private void button_save_Click(object sender, RoutedEventArgs e)
         {
-            matrix.Save();
+            if (isCalculatePressed == true)
+            {
+                matrix.Save();
+            }
+            else
+            {
+                MessageBox.Show("First you have to calculate your situation");
+            }
         }
 
         private void button_open_Click(object sender, RoutedEventArgs e)

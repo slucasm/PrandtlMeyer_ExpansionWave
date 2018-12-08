@@ -129,5 +129,8 @@
             </TextBox.Background>
         </TextBox>
         <Button Content="Default parametes" Height="37" HorizontalAlignment="Left" Margin="920,50,0,0" Name="button_default" VerticalAlignment="Top" Width="117" Foreground="White" Background="#FF007CBF" FontFamily="Century Gothic" Click="button_default_Click" />
+        <Rectangle Height="25" HorizontalAlignment="Left" Margin="828,137,0,0" Name="rectangle_gradient" Stroke="White" VerticalAlignment="Top" Width="125" />
+        <Label Content="Min." Height="25" HorizontalAlignment="Left" Margin="790,137,0,0" Name="label_min" VerticalAlignment="Top" Width="40" Foreground="White" FontFamily="Century Gothic" FontWeight="Bold" />
+        <Label Content="Max." FontFamily="Century Gothic" FontWeight="Bold" Foreground="White" Height="25" HorizontalAlignment="Left" Margin="959,137,0,0" Name="label_max" VerticalAlignment="Top" Width="40" />
     </Grid>
 </Window>
