@@ -12,6 +12,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using LibreriaClases;
 using System.Data;
+using Microsoft.Research.DynamicDataDisplay.DataSources;
+using Microsoft.Research.DynamicDataDisplay;
 
 namespace WPF
 {
@@ -37,18 +39,16 @@ namespace WPF
 
         List<DataTable> listTables = new List<DataTable>();
 
-        /**DataTable table_u = new DataTable();
-        DataTable table_v = new DataTable();
-        DataTable table_rho = new DataTable();
-        DataTable table_P = new DataTable();
-        DataTable table_T = new DataTable();
-        DataTable table_M = new DataTable();**/
-
         List<Cell> listCells = new List<Cell>();
 
         Matriz matrix = new Matriz();
 
-
+        ChartPlotter plot_u = new ChartPlotter();
+        ChartPlotter plot_v = new ChartPlotter();
+        ChartPlotter plot_rho = new ChartPlotter();
+        ChartPlotter plot_P = new ChartPlotter();
+        ChartPlotter plot_T = new ChartPlotter();
+        ChartPlotter plot_M = new ChartPlotter();
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -62,20 +62,18 @@ namespace WPF
 
             label_information.Content = ("u:        v:      rho:        P:      T:      M:");
 
-
             rectangle_gradient.Fill = new LinearGradientBrush( Color.FromRgb(255,255,255), Color.FromRgb(0,230,0),new Point(0, 0), new Point(1, 0));
             rectangle_gradient.Visibility = Visibility.Hidden;
             label_min.Visibility = Visibility.Hidden;
             label_max.Visibility = Visibility.Hidden;
-            
-            
-            
+
+            label_plot_title.Visibility = Visibility.Hidden;
+            label_plot_xaxis.Visibility = Visibility.Hidden;
+            label_plot_yaxis.Visibility = Visibility.Hidden;
+
+
             
 
-            //Polygon p = new Polygon();
-            //p.Points = new PointCollection() { new Point(0, 0), new Point(100, 0), new Point(100, 100), new Point(0, 100) };
-            //p.Fill = Brushes.Red;
-            //grid1.Children.Add(p);
         }
 
         private void button_introduction_Click(object sender, RoutedEventArgs e)
@@ -118,6 +116,14 @@ namespace WPF
                 grid_M.Visibility = Visibility.Hidden;
                 rectangle_gradient.Fill = new LinearGradientBrush(Color.FromRgb(255, 255, 255), Color.FromRgb(0, 230, 0), new Point(0, 0), new Point(1, 0));
 
+                grid_plot_u.Visibility = Visibility.Visible;
+                grid_plot_v.Visibility = Visibility.Hidden;
+                grid_plot_rho.Visibility = Visibility.Hidden;
+                grid_plot_P.Visibility = Visibility.Hidden;
+                grid_plot_T.Visibility = Visibility.Hidden;
+                grid_plot_M.Visibility = Visibility.Hidden;
+
+                label_plot_yaxis.Content = "U (m/s)";
             }
             else if (comboBox_selectgrid.SelectedIndex == 1)
             {
@@ -129,6 +135,14 @@ namespace WPF
                 grid_M.Visibility = Visibility.Hidden;
                 rectangle_gradient.Fill = new LinearGradientBrush(Color.FromRgb(255, 255, 255), Color.FromRgb(0, 92, 230), new Point(0, 0), new Point(1, 0));
 
+                grid_plot_u.Visibility = Visibility.Hidden;
+                grid_plot_v.Visibility = Visibility.Visible;
+                grid_plot_rho.Visibility = Visibility.Hidden;
+                grid_plot_P.Visibility = Visibility.Hidden;
+                grid_plot_T.Visibility = Visibility.Hidden;
+                grid_plot_M.Visibility = Visibility.Hidden;
+
+                label_plot_yaxis.Content = "V (m/s)";
             }
             else if (comboBox_selectgrid.SelectedIndex == 2)
             {
@@ -139,6 +153,15 @@ namespace WPF
                 grid_T.Visibility = Visibility.Hidden;
                 grid_M.Visibility = Visibility.Hidden;
                 rectangle_gradient.Fill = new LinearGradientBrush(Color.FromRgb(255, 255, 255), Color.FromRgb(230, 184, 0), new Point(0, 0), new Point(1, 0));
+
+                grid_plot_u.Visibility = Visibility.Hidden;
+                grid_plot_v.Visibility = Visibility.Hidden;
+                grid_plot_rho.Visibility = Visibility.Visible;
+                grid_plot_P.Visibility = Visibility.Hidden;
+                grid_plot_T.Visibility = Visibility.Hidden;
+                grid_plot_M.Visibility = Visibility.Hidden;
+
+                label_plot_yaxis.Content = "ρ (kg/m³)";
             }
             else if (comboBox_selectgrid.SelectedIndex == 3)
             {
@@ -149,6 +172,16 @@ namespace WPF
                 grid_T.Visibility = Visibility.Hidden;
                 grid_M.Visibility = Visibility.Hidden;
                 rectangle_gradient.Fill = new LinearGradientBrush(Color.FromRgb(255, 255, 255), Color.FromRgb(230, 0, 92), new Point(0, 0), new Point(1, 0));
+
+                grid_plot_u.Visibility = Visibility.Hidden;
+                grid_plot_v.Visibility = Visibility.Hidden;
+                grid_plot_rho.Visibility = Visibility.Hidden;
+                grid_plot_P.Visibility = Visibility.Visible;
+                grid_plot_T.Visibility = Visibility.Hidden;
+                grid_plot_M.Visibility = Visibility.Hidden;
+
+                label_plot_yaxis.Content = "P (N/m²)";
+
             }
             else if (comboBox_selectgrid.SelectedIndex == 4)
             {
@@ -159,6 +192,14 @@ namespace WPF
                 grid_T.Visibility = Visibility.Visible;
                 grid_M.Visibility = Visibility.Hidden;
                 rectangle_gradient.Fill = new LinearGradientBrush(Color.FromRgb(255, 255, 255), Color.FromRgb(230, 0, 0), new Point(0, 0), new Point(1, 0));
+
+                grid_plot_u.Visibility = Visibility.Hidden;
+                grid_plot_v.Visibility = Visibility.Hidden;
+                grid_plot_rho.Visibility = Visibility.Hidden;
+                grid_plot_P.Visibility = Visibility.Hidden;
+                grid_plot_T.Visibility = Visibility.Visible;
+                grid_plot_M.Visibility = Visibility.Hidden;
+                label_plot_yaxis.Content = "T (K)";
             }
             else if (comboBox_selectgrid.SelectedIndex == 5)
             {
@@ -169,6 +210,14 @@ namespace WPF
                 grid_T.Visibility = Visibility.Hidden;
                 grid_M.Visibility = Visibility.Visible;
                 rectangle_gradient.Fill = new LinearGradientBrush(Color.FromRgb(255, 255, 255), Color.FromRgb(172, 115, 57), new Point(0, 0), new Point(1, 0));
+
+                grid_plot_u.Visibility = Visibility.Hidden;
+                grid_plot_v.Visibility = Visibility.Hidden;
+                grid_plot_rho.Visibility = Visibility.Hidden;
+                grid_plot_P.Visibility = Visibility.Hidden;
+                grid_plot_T.Visibility = Visibility.Hidden;
+                grid_plot_M.Visibility = Visibility.Visible;
+                label_plot_yaxis.Content = "Mach";
             }
         }
 
@@ -178,6 +227,7 @@ namespace WPF
             int i = Convert.ToInt32(obj.DataContext.ToString());
             label_information.Content = String.Format("u: " + Math.Round(listCells[i].u,3) +"   v: " + Math.Round(listCells[i].v,3) +  "    rho: " + Math.Round(listCells[i].Rho,3) +  "    P: " + Math.Round(listCells[i].P,3) +  "    T: " + Math.Round(listCells[i].T,3) +  "    M: " + Math.Round(listCells[i].M,3));
         }
+
         private void Polygon_MouseLeave(object sender, MouseEventArgs e)
         {
             label_information.Content = String.Format("u:        v:      rho:        P:      T:      M:");
@@ -199,7 +249,11 @@ namespace WPF
 
         private void button_calculate_Click(object sender, RoutedEventArgs e)
         {
-            if (textBox_columns.Text != "" && textBox_rows.Text != "" && textBox_rho.Text != "" && textBox_P.Text != "" && textBox_T.Text != "" && textBox_M.Text != "" && textBox_R.Text != "" && textBox_E.Text != "" && textBox_gamma.Text != "" && textBox_theta.Text != "" && isCalculatePressed == false)
+            if (isCalculatePressed == true)
+            {
+                MessageBox.Show("To calculate something, first restart the situation");
+            }
+            else if (textBox_columns.Text != "" && textBox_rows.Text != "" && textBox_rho.Text != "" && textBox_P.Text != "" && textBox_T.Text != "" && textBox_M.Text != "" && textBox_R.Text != "" && textBox_E.Text != "" && textBox_gamma.Text != "" && textBox_theta.Text != "" && isCalculatePressed == false)
             {
                 isCalculatePressed = true;
 
@@ -271,8 +325,75 @@ namespace WPF
 
                 label_min.Visibility = Visibility.Visible;
                 label_max.Visibility = Visibility.Visible;
-            }
 
+
+                List<List<Point>> listPoints = matrix.calculateGraph();
+                RawDataSource u_body = new RawDataSource(listPoints[0]);
+                RawDataSource v_body = new RawDataSource(listPoints[1]);
+                RawDataSource rho_body = new RawDataSource(listPoints[2]);
+                RawDataSource P_body = new RawDataSource(listPoints[3]);
+                RawDataSource T_body = new RawDataSource(listPoints[4]);
+                RawDataSource M_body = new RawDataSource(listPoints[5]);
+
+                RawDataSource u_bnd = new RawDataSource(listPoints[6]);
+                RawDataSource v_bnd = new RawDataSource(listPoints[7]);
+                RawDataSource rho_bnd = new RawDataSource(listPoints[8]);
+                RawDataSource P_bnd = new RawDataSource(listPoints[9]);
+                RawDataSource T_bnd = new RawDataSource(listPoints[10]);
+                RawDataSource M_bnd = new RawDataSource(listPoints[11]);
+
+                plot_u.AddLineGraph(u_body, Colors.Blue, 1, "Body");
+                plot_u.AddLineGraph(u_bnd, Colors.Red, 1, "Boundary");
+
+                plot_v.AddLineGraph(v_body, Colors.Blue, 1, "Body");
+                plot_v.AddLineGraph(v_bnd, Colors.Red, 1, "Boundary");
+
+                plot_rho.AddLineGraph(rho_body, Colors.Blue, 1, "Body");
+                plot_rho.AddLineGraph(rho_bnd, Colors.Red, 1, "Boundary");
+
+                plot_P.AddLineGraph(P_body, Colors.Blue, 1, "Body");
+                plot_P.AddLineGraph(P_bnd, Colors.Red, 1, "Boundary");
+
+                plot_T.AddLineGraph(T_body, Colors.Blue, 1, "Body");
+                plot_T.AddLineGraph(T_bnd, Colors.Red, 1, "Boundary");
+
+                plot_M.AddLineGraph(M_body, Colors.Blue, 1, "Body");
+                plot_M.AddLineGraph(M_bnd, Colors.Red, 1, "Boundary");
+
+                grid_plot_u.Children.Add(plot_u);
+                grid_plot_v.Children.Add(plot_v);
+                grid_plot_rho.Children.Add(plot_rho);
+                grid_plot_P.Children.Add(plot_P);
+                grid_plot_T.Children.Add(plot_T);
+                grid_plot_M.Children.Add(plot_M);
+
+                plot_u.Background = Brushes.Transparent;
+                plot_v.Background = Brushes.Transparent;
+                plot_rho.Background = Brushes.Transparent;
+                plot_P.Background = Brushes.Transparent;
+                plot_T.Background = Brushes.Transparent;
+                plot_M.Background = Brushes.Transparent;
+
+                plot_u.Foreground = Brushes.White;
+                plot_v.Foreground = Brushes.White;
+                plot_rho.Foreground = Brushes.White;
+                plot_P.Foreground = Brushes.White;
+                plot_T.Foreground = Brushes.White;
+                plot_M.Foreground = Brushes.White;
+
+                plot_u.Legend.Foreground = Brushes.Black;
+                plot_v.Legend.Foreground = Brushes.Black;
+                plot_rho.Legend.Foreground = Brushes.Black;
+                plot_P.Legend.Foreground = Brushes.Black;
+                plot_T.Legend.Foreground = Brushes.Black;
+
+                label_plot_yaxis.Content = "U (m/s)";
+                grid_plot_u.Visibility = Visibility.Visible;
+
+                label_plot_title.Visibility = Visibility.Visible;
+                label_plot_xaxis.Visibility = Visibility.Visible;
+                label_plot_yaxis.Visibility = Visibility.Visible;
+            }
             else
             {
                 MessageBox.Show("First select all initial parameters");
@@ -314,6 +435,36 @@ namespace WPF
             label_max.Visibility = Visibility.Hidden;
             isCalculatePressed = false;
 
+            grid_plot_u.Visibility = Visibility.Hidden;
+            grid_plot_v.Visibility = Visibility.Hidden;
+            grid_plot_rho.Visibility = Visibility.Hidden;
+            grid_plot_P.Visibility = Visibility.Hidden;
+            grid_plot_T.Visibility = Visibility.Hidden;
+            grid_plot_M.Visibility = Visibility.Hidden;
+
+            plot_u = new ChartPlotter();
+            plot_v = new ChartPlotter();
+            plot_rho = new ChartPlotter();
+            plot_P = new ChartPlotter();
+            plot_T = new ChartPlotter();
+            plot_M = new ChartPlotter();
+
+            grid_plot_u.Children.Clear();
+            grid_plot_v.Children.Clear();
+            grid_plot_rho.Children.Clear();
+            grid_plot_P.Children.Clear();
+            grid_plot_T.Children.Clear();
+            grid_plot_M.Children.Clear();
+
+            label_min.Visibility = Visibility.Hidden;
+            label_max.Visibility = Visibility.Hidden;
+            rectangle_gradient.Visibility = Visibility.Hidden;
+
+            label_plot_title.Visibility = Visibility.Hidden;
+            label_plot_xaxis.Visibility = Visibility.Hidden;
+            label_plot_yaxis.Visibility = Visibility.Hidden;
+
+
         }
 
         private void button_save_Click(object sender, RoutedEventArgs e)
@@ -335,6 +486,7 @@ namespace WPF
             matrix.Initialize();
             matrix.calculate();
             matrix.calculatePoligons();
+            matrix.colorPolygons();
             List<List<Polygon>> listPolygons = matrix.getListPolygons();
             listPolygons_u = listPolygons[0];
             listPolygons_v = listPolygons[1];
@@ -379,7 +531,84 @@ namespace WPF
 
 
             }
+
             listTables = matrix.createTables();
+
+            rectangle_gradient.Visibility = Visibility.Visible;
+
+            label_min.Visibility = Visibility.Visible;
+            label_max.Visibility = Visibility.Visible;
+
+
+            List<List<Point>> listPoints = matrix.calculateGraph();
+            RawDataSource u_body = new RawDataSource(listPoints[0]);
+            RawDataSource v_body = new RawDataSource(listPoints[1]);
+            RawDataSource rho_body = new RawDataSource(listPoints[2]);
+            RawDataSource P_body = new RawDataSource(listPoints[3]);
+            RawDataSource T_body = new RawDataSource(listPoints[4]);
+            RawDataSource M_body = new RawDataSource(listPoints[5]);
+
+            RawDataSource u_bnd = new RawDataSource(listPoints[6]);
+            RawDataSource v_bnd = new RawDataSource(listPoints[7]);
+            RawDataSource rho_bnd = new RawDataSource(listPoints[8]);
+            RawDataSource P_bnd = new RawDataSource(listPoints[9]);
+            RawDataSource T_bnd = new RawDataSource(listPoints[10]);
+            RawDataSource M_bnd = new RawDataSource(listPoints[11]);
+
+            plot_u.AddLineGraph(u_body, Colors.Blue, 1, "Body");
+            plot_u.AddLineGraph(u_bnd, Colors.Red, 1, "Boundary");
+
+            plot_v.AddLineGraph(v_body, Colors.Blue, 1, "Body");
+            plot_v.AddLineGraph(v_bnd, Colors.Red, 1, "Boundary");
+
+            plot_rho.AddLineGraph(rho_body, Colors.Blue, 1, "Body");
+            plot_rho.AddLineGraph(rho_bnd, Colors.Red, 1, "Boundary");
+
+            plot_P.AddLineGraph(P_body, Colors.Blue, 1, "Body");
+            plot_P.AddLineGraph(P_bnd, Colors.Red, 1, "Boundary");
+
+            plot_T.AddLineGraph(T_body, Colors.Blue, 1, "Body");
+            plot_T.AddLineGraph(T_bnd, Colors.Red, 1, "Boundary");
+
+            plot_M.AddLineGraph(M_body, Colors.Blue, 1, "Body");
+            plot_M.AddLineGraph(M_bnd, Colors.Red, 1, "Boundary");
+
+            grid_plot_u.Children.Add(plot_u);
+            grid_plot_v.Children.Add(plot_v);
+            grid_plot_rho.Children.Add(plot_rho);
+            grid_plot_P.Children.Add(plot_P);
+            grid_plot_T.Children.Add(plot_T);
+            grid_plot_M.Children.Add(plot_M);
+
+            plot_u.Background = Brushes.Transparent;
+            plot_v.Background = Brushes.Transparent;
+            plot_rho.Background = Brushes.Transparent;
+            plot_P.Background = Brushes.Transparent;
+            plot_T.Background = Brushes.Transparent;
+            plot_M.Background = Brushes.Transparent;
+
+            plot_u.Foreground = Brushes.White;
+            plot_v.Foreground = Brushes.White;
+            plot_rho.Foreground = Brushes.White;
+            plot_P.Foreground = Brushes.White;
+            plot_T.Foreground = Brushes.White;
+            plot_M.Foreground = Brushes.White;
+
+            plot_u.Legend.Foreground = Brushes.Black;
+            plot_v.Legend.Foreground = Brushes.Black;
+            plot_rho.Legend.Foreground = Brushes.Black;
+            plot_P.Legend.Foreground = Brushes.Black;
+            plot_T.Legend.Foreground = Brushes.Black;
+
+            label_plot_yaxis.Content = "U (m/s)";
+            grid_plot_u.Visibility = Visibility.Visible;
+
+            label_plot_title.Visibility = Visibility.Visible;
+            label_plot_xaxis.Visibility = Visibility.Visible;
+            label_plot_yaxis.Visibility = Visibility.Visible;
+
+            isCalculatePressed = true;
+
         }
         
     }

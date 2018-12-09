@@ -7,6 +7,7 @@ using System.Data;
 using System.Windows.Controls;
 using Microsoft.Win32;
 using System.IO;
+using System.Windows;
 
 namespace LibreriaClases
 {
@@ -518,6 +519,85 @@ namespace LibreriaClases
             u_in = M_in * a_in;
 
             matrix = new Cell[rows, columns];
+        }
+
+        public List<List<Point>> calculateGraph()
+        {
+
+            List<Point> listPoints_body_u = new List<Point>();
+            List<Point> listPoints_bnd_u = new List<Point>();
+            List<Point> listPoints_body_v = new List<Point>();
+            List<Point> listPoints_bnd_v = new List<Point>();
+            List<Point> listPoints_body_rho = new List<Point>();
+            List<Point> listPoints_bnd_rho = new List<Point>();
+            List<Point> listPoints_body_P = new List<Point>();
+            List<Point> listPoints_bnd_P = new List<Point>();
+            List<Point> listPoints_body_T = new List<Point>();
+            List<Point> listPoints_bnd_T = new List<Point>();
+            List<Point> listPoints_body_M = new List<Point>();
+            List<Point> listPoints_bnd_M = new List<Point>();
+
+            List<List<Point>> listPoints = new List<List<Point>>();
+
+
+            for (int j = 0; j < columns; j++)
+            {
+                double u_tot = 0;
+                double v_tot = 0;
+                double rho_tot = 0;
+                double P_tot = 0;
+                double T_tot = 0;
+                double M_tot = 0;
+
+                for (int i = 1; i < rows; i++) //calculate avg value in body (except row == 0)
+                {
+                    u_tot += matrix[i, j].u;
+                    v_tot += matrix[i, j].v;
+                    rho_tot += matrix[i, j].Rho;
+                    P_tot += matrix[i, j].P;
+                    T_tot += matrix[i, j].T;
+                    M_tot += matrix[i, j].M;
+                }
+
+                double u_avg = u_tot / (rows - 1);
+                double v_avg = v_tot / (rows - 1);
+                double rho_avg = rho_tot / (rows - 1);
+                double P_avg = P_tot / (rows - 1);
+                double T_avg = T_tot / (rows - 1);
+                double M_avg = M_tot / (rows - 1);
+
+                listPoints_body_u.Add(new Point(matrix[1,j].x, u_avg));
+                listPoints_body_v.Add(new Point(matrix[1, j].x, v_avg));
+                listPoints_body_rho.Add(new Point(matrix[1, j].x, rho_avg));
+                listPoints_body_P.Add(new Point(matrix[1, j].x, P_avg));
+                listPoints_body_T.Add(new Point(matrix[1, j].x, T_avg));
+                listPoints_body_M.Add(new Point(matrix[1, j].x, M_avg));
+
+                listPoints_bnd_u.Add(new Point(matrix[1, j].x, matrix[0, j].u));
+                listPoints_bnd_v.Add(new Point(matrix[1, j].x, matrix[0, j].v));
+                listPoints_bnd_rho.Add(new Point(matrix[1, j].x, matrix[0, j].Rho));
+                listPoints_bnd_P.Add(new Point(matrix[1, j].x, matrix[0, j].P));
+                listPoints_bnd_T.Add(new Point(matrix[1, j].x, matrix[0, j].T));
+                listPoints_bnd_M.Add(new Point(matrix[1, j].x, matrix[0, j].M));
+            }
+
+            listPoints.Add(listPoints_body_u);
+            listPoints.Add(listPoints_body_v);
+            listPoints.Add(listPoints_body_rho);
+            listPoints.Add(listPoints_body_P);
+            listPoints.Add(listPoints_body_T);
+            listPoints.Add(listPoints_body_M);
+
+            listPoints.Add(listPoints_bnd_u);
+            listPoints.Add(listPoints_bnd_v);
+            listPoints.Add(listPoints_bnd_rho);
+            listPoints.Add(listPoints_bnd_P);
+            listPoints.Add(listPoints_bnd_T);
+            listPoints.Add(listPoints_bnd_M);
+
+
+            return listPoints;
+
         }
 
 
