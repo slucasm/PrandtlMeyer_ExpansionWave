@@ -116,12 +116,47 @@
       <Name>LibreriaClases</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\intermediate_u.PNG" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Title1.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Title2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\intermediate_v.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\final_M.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\final_P.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\final_rho.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\final_T.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\final_u.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\final_v.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\intermediate_M.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\intermediate_p.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\intermediate_rho.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\intermediate_T.PNG" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -45,6 +45,8 @@ namespace LibreriaClases
         double delta_x;
         double delta_y;
 
+        double delta_xi;
+
         DataTable table_u = new DataTable();
         DataTable table_v = new DataTable();
         DataTable table_rho = new DataTable();
@@ -112,6 +114,7 @@ namespace LibreriaClases
 
         public void calculate()
         {
+            //for (int j = 0; j<columns-1; j++)
             for (int j = 0; matrix[0,j].x <= L; j++)
             {
                 for (int i = 0; i < rows; i++)//First que calculate values for transformation grid
@@ -119,14 +122,20 @@ namespace LibreriaClases
                     matrix[i, j].calculateTransform(H, E, theta);
                 }
 
+                double[] max_tan_Array = new double[rows];//
+
                 for (int y = 0; y < rows; y++)//Now we calculate the delta_x, that is the step size
                 {
                     delta_y = matrix[2, j].y - matrix[1, j].y;
-                    double[] max_tan_Array = new double[rows];
+                    //double[] max_tan_Array = new double[rows];
                     max_tan_Array[y] = matrix[y, j].calculateTanMax(theta);
-                    double max_tan = max_tan_Array.Max();
-                    delta_x = matrix[y, j].calculateStep(C, delta_y, max_tan);
+                    //double max_tan = max_tan_Array.Max();
+                    //delta_x = matrix[y, j].calculateStep(C, delta_y, max_tan);
                 }
+
+                double max_tan = max_tan_Array.Max();//
+                delta_x = C*(delta_y/max_tan);//
+                delta_xi = delta_x;
                 for (int e = 0; e < rows; e++)
                 {
                     matrix[e, j + 1].x = matrix[e, j].x + delta_x;
@@ -137,16 +146,16 @@ namespace LibreriaClases
                     double[] arrayF_p;
                     if (b == 0)
                     {
-                        arrayF_p = matrix[b, j].predictorStepBoundaryDown(matrix[b + 1, j].F1, matrix[b + 1, j].F2, matrix[b + 1, j].F3, matrix[b + 1, j].F4, matrix[b + 1, j].G1, matrix[b + 1, j].G2, matrix[b + 1, j].G3, matrix[b + 1, j].G4, delta_x, delta_y_t);
+                        arrayF_p = matrix[b, j].predictorStepBoundaryDown(matrix[b + 1, j].F1, matrix[b + 1, j].F2, matrix[b + 1, j].F3, matrix[b + 1, j].F4, matrix[b + 1, j].G1, matrix[b + 1, j].G2, matrix[b + 1, j].G3, matrix[b + 1, j].G4, delta_xi, delta_y_t);
 
                     }
                     else if (b == rows-1)
                     {
-                        arrayF_p = matrix[b, j].predictorStepBoundaryUp(matrix[b - 1, j].F1, matrix[b - 1, j].F2, matrix[b - 1, j].F3, matrix[b - 1, j].F4, matrix[b - 1, j].G1, matrix[b - 1, j].G2, matrix[b - 1, j].G3, matrix[b - 1, j].G4, delta_x, delta_y_t);
+                        arrayF_p = matrix[b, j].predictorStepBoundaryUp(matrix[b - 1, j].F1, matrix[b - 1, j].F2, matrix[b - 1, j].F3, matrix[b - 1, j].F4, matrix[b - 1, j].G1, matrix[b - 1, j].G2, matrix[b - 1, j].G3, matrix[b - 1, j].G4, delta_xi, delta_y_t);
                     }
                     else
                     {
-                        arrayF_p = matrix[b, j].predictorStepBody(matrix[b + 1, j].F1, matrix[b + 1, j].F2, matrix[b + 1, j].F3, matrix[b + 1, j].F4, matrix[b + 1, j].G1, matrix[b + 1, j].G2, matrix[b + 1, j].G3, matrix[b + 1, j].G4, matrix[b - 1, j].F1, matrix[b - 1, j].F2, matrix[b - 1, j].F3, matrix[b - 1, j].F4, matrix[b + 1, j].P, matrix[b - 1, j].P, delta_x, delta_y_t);
+                        arrayF_p = matrix[b, j].predictorStepBody(matrix[b + 1, j].F1, matrix[b + 1, j].F2, matrix[b + 1, j].F3, matrix[b + 1, j].F4, matrix[b + 1, j].G1, matrix[b + 1, j].G2, matrix[b + 1, j].G3, matrix[b + 1, j].G4, matrix[b - 1, j].F1, matrix[b - 1, j].F2, matrix[b - 1, j].F3, matrix[b - 1, j].F4, matrix[b + 1, j].P, matrix[b - 1, j].P, delta_xi, delta_y_t);
                     }
                     matrix[b, j + 1].F1_p = arrayF_p[0];
                     matrix[b, j + 1].F2_p = arrayF_p[1];
@@ -161,6 +170,8 @@ namespace LibreriaClases
                     matrix[s, j + 1].G2_p = arrayG_p[1];
                     matrix[s, j + 1].G3_p = arrayG_p[2];
                     matrix[s, j + 1].G4_p = arrayG_p[3];
+                    matrix[s, j + 1].Rho_p = arrayG_p[4];
+                    matrix[s, j + 1].P_p = arrayG_p[5];
                 }
 
                 for (int c = 0; c < rows; c++)
@@ -168,15 +179,15 @@ namespace LibreriaClases
                     double[] arrayF;
                     if (c == 0)
                     {
-                        arrayF = matrix[c, j].calculateCorrectorBoundaryDown(matrix[c, j + 1].F1_p, matrix[c + 1, j + 1].F1_p, matrix[c, j + 1].F2_p, matrix[c + 1, j + 1].F2_p, matrix[c, j + 1].F3_p, matrix[c + 1, j + 1].F3_p, matrix[c, j + 1].F4_p, matrix[c + 1, j + 1].F4_p, matrix[c, j + 1].G1_p, matrix[c + 1, j + 1].G1_p, matrix[c, j + 1].G2_p, matrix[c + 1, j + 1].G2_p, matrix[c, j + 1].G3_p, matrix[c + 1, j + 1].G3_p, matrix[c, j + 1].G4_p, matrix[c + 1, j + 1].G4_p, delta_x, delta_y_t);
+                        arrayF = matrix[c, j].calculateCorrectorBoundaryDown(matrix[c, j + 1].F1_p, matrix[c + 1, j + 1].F1_p, matrix[c, j + 1].F2_p, matrix[c + 1, j + 1].F2_p, matrix[c, j + 1].F3_p, matrix[c + 1, j + 1].F3_p, matrix[c, j + 1].F4_p, matrix[c + 1, j + 1].F4_p, matrix[c, j + 1].G1_p, matrix[c + 1, j + 1].G1_p, matrix[c, j + 1].G2_p, matrix[c + 1, j + 1].G2_p, matrix[c, j + 1].G3_p, matrix[c + 1, j + 1].G3_p, matrix[c, j + 1].G4_p, matrix[c + 1, j + 1].G4_p, delta_xi, delta_y_t);
                     }
                     else if (c == rows-1)
                     {
-                        arrayF = matrix[c, j].calculateCorrectorBoundaryUp(matrix[c, j + 1].F1_p, matrix[c - 1, j + 1].F1_p, matrix[c, j + 1].F2_p, matrix[c - 1, j + 1].F2_p, matrix[c, j + 1].F3_p, matrix[c - 1, j + 1].F3_p, matrix[c, j + 1].F4_p, matrix[c - 1, j + 1].F4_p, matrix[c, j + 1].G1_p, matrix[c - 1, j + 1].G1_p, matrix[c, j + 1].G2_p, matrix[c - 1, j + 1].G2_p, matrix[c, j + 1].G3_p, matrix[c - 1, j + 1].G3_p, matrix[c, j + 1].G4_p, matrix[c - 1, j + 1].G4_p, delta_x, delta_y_t);
+                        arrayF = matrix[c, j].calculateCorrectorBoundaryUp(matrix[c, j + 1].F1_p, matrix[c - 1, j + 1].F1_p, matrix[c, j + 1].F2_p, matrix[c - 1, j + 1].F2_p, matrix[c, j + 1].F3_p, matrix[c - 1, j + 1].F3_p, matrix[c, j + 1].F4_p, matrix[c - 1, j + 1].F4_p, matrix[c, j + 1].G1_p, matrix[c - 1, j + 1].G1_p, matrix[c, j + 1].G2_p, matrix[c - 1, j + 1].G2_p, matrix[c, j + 1].G3_p, matrix[c - 1, j + 1].G3_p, matrix[c, j + 1].G4_p, matrix[c - 1, j + 1].G4_p, delta_xi, delta_y_t);
                     }
                     else
                     {
-                        arrayF = matrix[c, j].calculateCorrectorBody(matrix[c, j + 1].F1_p, matrix[c + 1, j + 1].F1_p, matrix[c - 1, j + 1].F1_p, matrix[c, j + 1].F2_p, matrix[c + 1, j + 1].F2_p, matrix[c - 1, j + 1].F2_p, matrix[c, j + 1].F3_p, matrix[c + 1, j + 1].F3_p, matrix[c - 1, j + 1].F3_p, matrix[c, j + 1].F4_p, matrix[c + 1, j + 1].F4_p, matrix[c - 1, j + 1].F4_p, matrix[c, j + 1].G1_p, matrix[c - 1, j + 1].G1_p, matrix[c, j + 1].G2_p, matrix[c - 1, j + 1].G2_p, matrix[c, j + 1].G3_p, matrix[c - 1, j + 1].G3_p, matrix[c, j + 1].G4_p, matrix[c - 1, j + 1].G4_p, matrix[c + 1, j].P_p, matrix[c - 1, j].P_p, delta_x, delta_y_t);
+                        arrayF = matrix[c, j].calculateCorrectorBody(matrix[c, j + 1].F1_p, matrix[c + 1, j + 1].F1_p, matrix[c - 1, j + 1].F1_p, matrix[c, j + 1].F2_p, matrix[c + 1, j + 1].F2_p, matrix[c - 1, j + 1].F2_p, matrix[c, j + 1].F3_p, matrix[c + 1, j + 1].F3_p, matrix[c - 1, j + 1].F3_p, matrix[c, j + 1].F4_p, matrix[c + 1, j + 1].F4_p, matrix[c - 1, j + 1].F4_p, matrix[c, j + 1].G1_p, matrix[c - 1, j + 1].G1_p, matrix[c, j + 1].G2_p, matrix[c - 1, j + 1].G2_p, matrix[c, j + 1].G3_p, matrix[c - 1, j + 1].G3_p, matrix[c, j + 1].G4_p, matrix[c - 1, j + 1].G4_p,matrix[c,j+1].P_p, matrix[c + 1, j+1].P_p, matrix[c - 1, j+1].P_p, delta_xi, delta_y_t);
                     }
 
                     matrix[c, j + 1].F1 = arrayF[0];

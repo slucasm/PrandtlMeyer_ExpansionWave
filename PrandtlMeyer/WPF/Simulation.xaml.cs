@@ -41,7 +41,7 @@ namespace WPF
 
         List<Cell> listCells = new List<Cell>();
 
-        Matriz matrix = new Matriz();
+        public Matriz matrix = new Matriz();
 
         ChartPlotter plot_u = new ChartPlotter();
         ChartPlotter plot_v = new ChartPlotter();
@@ -60,7 +60,7 @@ namespace WPF
             comboBox_selectgrid.Items.Add("M grid");
             comboBox_selectgrid.SelectedIndex = 0;
 
-            label_information.Content = ("u:        v:      rho:        P:      T:      M:");
+            label_information.Content = ("u:        v:      rho:        P:      T:      M:      x:      y:");
 
             rectangle_gradient.Fill = new LinearGradientBrush( Color.FromRgb(255,255,255), Color.FromRgb(0,230,0),new Point(0, 0), new Point(1, 0));
             rectangle_gradient.Visibility = Visibility.Hidden;
@@ -225,12 +225,12 @@ namespace WPF
         {
             Polygon obj = sender as Polygon;
             int i = Convert.ToInt32(obj.DataContext.ToString());
-            label_information.Content = String.Format("u: " + Math.Round(listCells[i].u,3) +"   v: " + Math.Round(listCells[i].v,3) +  "    rho: " + Math.Round(listCells[i].Rho,3) +  "    P: " + Math.Round(listCells[i].P,3) +  "    T: " + Math.Round(listCells[i].T,3) +  "    M: " + Math.Round(listCells[i].M,3));
+            label_information.Content = String.Format("u: " + Math.Round(listCells[i].u,3) +"   v: " + Math.Round(listCells[i].v,3) +  "    rho: " + Math.Round(listCells[i].Rho,3) +  "    P: " + Math.Round(listCells[i].P,3) +  "    T: " + Math.Round(listCells[i].T,3) +  "    M: " + Math.Round(listCells[i].M,3)+ "  x: " +Math.Round(listCells[i].x,3)+"    y: "+Math.Round(listCells[i].y,3));
         }
 
         private void Polygon_MouseLeave(object sender, MouseEventArgs e)
         {
-            label_information.Content = String.Format("u:        v:      rho:        P:      T:      M:");
+            label_information.Content = String.Format("u:        v:      rho:        P:      T:      M:     x:      y:");
         }
 
         private void button_default_Click(object sender, RoutedEventArgs e)
