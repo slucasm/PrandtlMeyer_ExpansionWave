@@ -244,7 +244,7 @@ namespace WPF
             textBox_E.Text = "10";
             textBox_theta.Text = "5,352";
             textBox_rows.Text = "41";
-            textBox_columns.Text = "89";
+            textBox_columns.Text = "120";
         }
 
         private void button_calculate_Click(object sender, RoutedEventArgs e)

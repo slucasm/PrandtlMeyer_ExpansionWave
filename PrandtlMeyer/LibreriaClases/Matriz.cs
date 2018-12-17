@@ -219,7 +219,7 @@ namespace LibreriaClases
         public void calculatePoligons()
         {
             double[] arrayDeltaY = new double[columns];
-            for (int j = 0; j < columns; j++)
+            for (int j = 0; matrix[1, j].x <= L; j++)
             {
                 arrayDeltaY[j] = matrix[2, j].y - matrix[1, j].y;
             }
@@ -229,17 +229,17 @@ namespace LibreriaClases
 
             up_left_X = 0;
             down_left_X = 0;
-            for (int j = 0; j < columns-1; j++)
+            for (int j = 0; matrix[1, j].x <= L; j++)
             {
                 up_right_X = up_left_X + delta_x;
                 down_right_X = up_right_X;
                 up_left_Y = 0;
                 up_right_Y = 0;
-                for (int i = rows-1; i > 0; i--)
+                for (int i = rows - 1; i > 0; i--)
                 {
                     down_left_Y = up_left_Y + arrayDeltaY[j];
                     down_right_Y = up_right_Y + arrayDeltaY[j + 1];
-                    matrix[i, j].calculatePoligon_u(up_left_X,up_left_Y,up_right_X,up_right_Y,down_left_X,down_left_Y,down_right_X,down_right_Y);
+                    matrix[i, j].calculatePoligon_u(up_left_X, up_left_Y, up_right_X, up_right_Y, down_left_X, down_left_Y, down_right_X, down_right_Y);
                     matrix[i, j].calculatePoligon_v(up_left_X, up_left_Y, up_right_X, up_right_Y, down_left_X, down_left_Y, down_right_X, down_right_Y);
                     matrix[i, j].calculatePoligon_rho(up_left_X, up_left_Y, up_right_X, up_right_Y, down_left_X, down_left_Y, down_right_X, down_right_Y);
                     matrix[i, j].calculatePoligon_P(up_left_X, up_left_Y, up_right_X, up_right_Y, down_left_X, down_left_Y, down_right_X, down_right_Y);
@@ -259,7 +259,7 @@ namespace LibreriaClases
             List<Cell> listaCells = new List<Cell>();
             for (int i = 0; i < rows; i++)
             {
-                for (int j = 0; j < columns; j++)
+                for (int j = 0; matrix[1, j].x <= L; j++)
                 {
                     listaCells.Add(matrix[i, j]);
                 }
@@ -360,7 +360,7 @@ namespace LibreriaClases
             List<Polygon> listPolygons_M = new List<Polygon>();
             int z = 0;
 
-            for (int j = 0; j < columns - 1; j++)
+            for (int j = 0; matrix[1, j].x <= L; j++)
             {
                 for (int i = 0; i < rows; i++)
                 {
@@ -398,7 +398,7 @@ namespace LibreriaClases
         public List<DataTable> createTables()
         {
 
-            for (int i = 0; i < columns; i++)
+            for (int i = 0; matrix[1, i].x <= L; i++)
             {
                
                 DataColumn index_u = new DataColumn(Convert.ToString(i), typeof(double));
@@ -425,9 +425,9 @@ namespace LibreriaClases
                 DataRow row_T = table_T.NewRow();
                 DataRow row_M = table_M.NewRow();
 
-                
 
-                for (int j = 0; j < columns; j++)
+
+                for (int j = 0; matrix[1, j].x <= L; j++)
                 {
                     
                     row_u[j] = Math.Round(matrix[i, j].u,3);
@@ -551,7 +551,7 @@ namespace LibreriaClases
             List<List<Point>> listPoints = new List<List<Point>>();
 
 
-            for (int j = 0; j < columns; j++)
+            for (int j = 0; matrix[1, j].x <= L; j++)
             {
                 double u_tot = 0;
                 double v_tot = 0;

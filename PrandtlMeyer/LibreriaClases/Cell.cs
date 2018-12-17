@@ -49,7 +49,7 @@ namespace LibreriaClases
             G4 = ((Gamma / (Gamma - 1)) * P * v) + (Rho * v * ((Math.Pow(u, 2) + Math.Pow(v, 2)) / 2));
 
         }
-
+        /*
         public void calculatePrimitives() //Calculate the values of u,v,T,P,rho from F's and G's
         {
             double A, B, C;
@@ -63,7 +63,7 @@ namespace LibreriaClases
             v = F3 / F1;
             P = F2 - (F1 * u);
             T = (P) / (Rho * R);
-        }
+        }*/
 
         public void calculateETA(double y_t_down,double delta_y_t) //calculate the ETA of our cell (vertical component of the grid in the computational plane)
         {
@@ -107,12 +107,12 @@ namespace LibreriaClases
             double tan_max = Math.Max(tan_max_1,tan_max_2);
             return tan_max;
         }
+
         public double calculateStep(double C,double delta_y,double tan_max) //Calculate the value of delta_x for the calculation of step size, delta_y is calculated in class Matriz because is constant 
         {
             double delta_x = C * (delta_y / tan_max);
             return delta_x;
         }
-
 
         public double[] predictorStepBody(double F1_up,double F2_up,double F3_up,double F4_up,double G1_up,double G2_up,double G3_up,double G4_up,double F1_down,double F2_down,double F3_down,double F4_down,double P_up,double P_down,double delta_x,double delta_y_t)
         {
@@ -160,7 +160,6 @@ namespace LibreriaClases
             return arrayF_p;
         }
 
-
         public double[] calculateGPredicted(double F1_p_next,double F2_p_next,double F3_p_next,double F4_p_next)
         {
             double A_p = ((Math.Pow(F3_p_next,2)) / (2 * F1_p_next)) - F4_p_next;
@@ -175,7 +174,6 @@ namespace LibreriaClases
             double[] arrayG_p = { G1_p_next, G2_p_next, G3_p_next, G4_p_next, Rho_p_next,P_p_next };
             return arrayG_p;
         }
-
 
         public double[] calculateCorrectorBody(double F1_p_next, double F1_p_next_up, double F1_p_next_down, double F2_p_next, double F2_p_next_up, double F2_p_next_down, double F3_p_next, double F3_p_next_up, double F3_p_next_down, double F4_p_next, double F4_p_next_up, double F4_p_next_down, double G1_p_next, double G1_p_next_down, double G2_p_next, double G2_p_next_down, double G3_p_next, double G3_p_next_down, double G4_p_next, double G4_p_next_down, double P_p_next, double P_p_next_up, double P_p_next_down, double delta_x, double delta_y_t)
         {
@@ -427,7 +425,6 @@ namespace LibreriaClases
             G4 = ((Gamma / (Gamma - 1)) * ((F2) - ((Math.Pow(F1, 2)) / Rho)) * (F3 / F1)) + (((Rho * F3) / (2 * F1)) * ((Math.Pow((F1 / Rho), 2)) + (Math.Pow((F3 / F1), 2))));
 
         }
-
 
         public void calculatePoligon_u(double up_left_X, double up_left_Y, double up_right_X, double up_right_Y, double down_left_X, double down_left_Y, double down_right_X, double down_right_Y)
         {

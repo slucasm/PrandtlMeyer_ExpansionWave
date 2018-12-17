@@ -29,7 +29,7 @@ namespace WPF
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            
+            label_textbody.Content = "The aim of this project is to study and obtain a numerical solution for a \n flow over a Prandtl Meyer expansion corner. At this problem, the flow is a \n two-dimensional, supersonic and inviscid flow moving over a surface. Giving \n the initial conditions, we will have to study how this flow evolves along \n all the surface, obtaining its properties at different points of the surface.";
             //Rectangle[,] matrixrectangle = new Rectangle[100, 100];
             //Rectangle[,] computationalmatrix;
             //double C = 0.5;
@@ -106,6 +106,16 @@ namespace WPF
         private void button_close_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void button_video_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void button_credits_Click(object sender, RoutedEventArgs e)
+        {
+
         }
 
         

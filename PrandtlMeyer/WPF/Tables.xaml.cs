@@ -96,14 +96,14 @@ namespace WPF
             List<double> listT = new List<double>();
             List<double> listM = new List<double>();
 
-            DataColumn columnu = listTables[0].Columns[listTables[0].Columns.Count - 1];
-            DataColumn columnv = listTables[1].Columns[listTables[1].Columns.Count - 1];
-            DataColumn columnRho = listTables[2].Columns[listTables[2].Columns.Count - 1];
-            DataColumn columnP = listTables[3].Columns[listTables[3].Columns.Count - 1];
-            DataColumn columnT = listTables[4].Columns[listTables[4].Columns.Count - 1];
-            DataColumn columnM = listTables[5].Columns[listTables[5].Columns.Count - 1];
+            DataColumn columnu = listTables[0].Columns[listTables[0].Columns.Count-1];
+            DataColumn columnv = listTables[1].Columns[listTables[1].Columns.Count-1];
+            DataColumn columnRho = listTables[2].Columns[listTables[2].Columns.Count-1];
+            DataColumn columnP = listTables[3].Columns[listTables[3].Columns.Count-1];
+            DataColumn columnT = listTables[4].Columns[listTables[4].Columns.Count-1];
+            DataColumn columnM = listTables[5].Columns[listTables[5].Columns.Count-1];
 
-            for (int i = 1; i < 22; i++)
+            for (int i = 1; i <= 22; i++)
             {
                 listu.Add(Convert.ToDouble(listTables[0].Rows[i][columnu.ColumnName]));
                 listv.Add(Convert.ToDouble(listTables[1].Rows[i][columnv.ColumnName]));
