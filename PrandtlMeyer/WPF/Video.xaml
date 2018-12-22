@@ -20,6 +20,6 @@
             <Button Name="btnStop" Click="btnStop_Click" Background="#FF007CBF" Foreground="White" Height="30" Width="100" FontFamily="Century Gothic" FontSize="20" FontWeight="Bold">Stop</Button>
             <Button Name="btnClose" Margin="5" Click="btnClose_Click" Background="#FF007CBF" Foreground="White" Height="30" Width="100" FontFamily="Century Gothic" FontSize="20" FontWeight="Bold">Close</Button>
         </WrapPanel>
-        <Label Content="Change video position" Height="30" HorizontalAlignment="Left" Margin="279,515,0,0" Name="label_titleslider" VerticalAlignment="Top" Width="245" Foreground="White" FontFamily="Century Gothic" FontSize="20" FontWeight="Bold" />
+        <Label Content="Change video position" Height="35" HorizontalAlignment="Left" Margin="279,515,0,0" Name="label_titleslider" VerticalAlignment="Top" Width="245" Foreground="White" FontFamily="Century Gothic" FontSize="20" FontWeight="Bold" />
     </Grid>
 </Window>
