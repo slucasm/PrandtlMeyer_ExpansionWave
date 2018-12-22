@@ -24,7 +24,6 @@ namespace LibreriaClases
         public double F1_p,F2_p,F3_p,F4_p,G1_p,G2_p,G3_p,G4_p;
         public double dF1_x,dF2_x,dF3_x,dF4_x;
         public double dF1_p_x, dF2_p_x, dF3_p_x, dF4_p_x;
-        //public double A_p, B_p, C_p, Rho_p, P_p;
         public double P_p,Rho_p;
         public double dF1_x_av, dF2_x_av, dF3_x_av, dF4_x_av;
 
@@ -36,7 +35,7 @@ namespace LibreriaClases
         public Polygon polygon_M = new Polygon();
 
 
-
+        //calculate F's and G's for the first column
         public void calculateOnlyForFirstColumn()
         {
             F1 = Rho * u;
@@ -49,28 +48,14 @@ namespace LibreriaClases
             G4 = ((Gamma / (Gamma - 1)) * P * v) + (Rho * v * ((Math.Pow(u, 2) + Math.Pow(v, 2)) / 2));
 
         }
-        /*
-        public void calculatePrimitives() //Calculate the values of u,v,T,P,rho from F's and G's
-        {
-            double A, B, C;
-
-            A = (Math.Pow(F3, 2) / (2 * F1)) - F4;
-            B = (Gamma / (Gamma - 1)) * F1 * F2;
-            C = -(((Gamma + 1) / (2 * (Gamma - 1))) * Math.Pow(F1, 3));
-
-            Rho = (-(B) + Math.Sqrt(Math.Pow(B, 2) - (4 * A * C))) / (2 * A);
-            u = F1 / Rho;
-            v = F3 / F1;
-            P = F2 - (F1 * u);
-            T = (P) / (Rho * R);
-        }*/
 
         public void calculateETA(double y_t_down,double delta_y_t) //calculate the ETA of our cell (vertical component of the grid in the computational plane)
         {
             y_t = y_t_down + delta_y_t;
         }
 
-        public void calculateTransform(double H,double E,double Theta) //Checked
+        //calculate variables that affect to grids
+        public void calculateTransform(double H,double E,double Theta) 
         {
             Theta = Theta*(Math.PI / 180);
             if (x < E)
@@ -81,9 +66,7 @@ namespace LibreriaClases
             else
             {
                 y_s = -(x-E)*Math.Tan(Theta);
-                //y_s = (-x * Math.Tan(Theta)) + (E * Math.Tan(Theta));
                 h = H + (x-E)*Math.Tan(Theta);
-                //h = H + (x * Math.Tan(Theta)) - (E * Math.Tan(Theta));
             }
 
             if (x < E)
@@ -94,7 +77,6 @@ namespace LibreriaClases
             {
                 double eta = (y - y_s) / h;
                 dETA_x = (Math.Tan(Theta) / h) * (1 - eta);
-                //dETA_x = (Math.Tan(Theta) / h) - (y_t * (Math.Tan(Theta) / h));//OJO REVISAR
             }
             y = (y_t * h) + y_s;
             dETA_y = 1 / h;
@@ -114,6 +96,7 @@ namespace LibreriaClases
             return delta_x;
         }
 
+        //calculate predictor Step for Body cells
         public double[] predictorStepBody(double F1_up,double F2_up,double F3_up,double F4_up,double G1_up,double G2_up,double G3_up,double G4_up,double F1_down,double F2_down,double F3_down,double F4_down,double P_up,double P_down,double delta_x,double delta_y_t)
         {
             dF1_x = ((dETA_x) * ((F1 - F1_up) / delta_y_t)) + ((dETA_y) * ((G1 - G1_up) / delta_y_t));
@@ -132,6 +115,7 @@ namespace LibreriaClases
             return arrayF_p;
         }
 
+        //calculate predictor step for lower boundary
         public double[] predictorStepBoundaryDown(double F1_up, double F2_up, double F3_up, double F4_up, double G1_up, double G2_up, double G3_up, double G4_up, double delta_x, double delta_y_t)
         {
             dF1_x = (dETA_x * ((F1 - F1_up) / delta_y_t)) + (dETA_y * ((G1 - G1_up) / delta_y_t));
@@ -146,6 +130,7 @@ namespace LibreriaClases
             return arrayF_p;
         }
 
+        //calculate predictor step for upper boundary
         public double[] predictorStepBoundaryUp(double F1_down, double F2_down, double F3_down, double F4_down, double G1_down, double G2_down, double G3_down, double G4_down, double delta_x, double delta_y_t)
         {
             dF1_x = (dETA_x * ((F1_down - F1) / delta_y_t)) + (dETA_y * ((G1_down - G1) / delta_y_t));
@@ -160,6 +145,7 @@ namespace LibreriaClases
             return arrayF_p;
         }
 
+        //calculate G predicted from F's predicted 
         public double[] calculateGPredicted(double F1_p_next,double F2_p_next,double F3_p_next,double F4_p_next)
         {
             double A_p = ((Math.Pow(F3_p_next,2)) / (2 * F1_p_next)) - F4_p_next;
@@ -174,7 +160,7 @@ namespace LibreriaClases
             double[] arrayG_p = { G1_p_next, G2_p_next, G3_p_next, G4_p_next, Rho_p_next,P_p_next };
             return arrayG_p;
         }
-
+        //calculate corrector step for body cells
         public double[] calculateCorrectorBody(double F1_p_next, double F1_p_next_up, double F1_p_next_down, double F2_p_next, double F2_p_next_up, double F2_p_next_down, double F3_p_next, double F3_p_next_up, double F3_p_next_down, double F4_p_next, double F4_p_next_up, double F4_p_next_down, double G1_p_next, double G1_p_next_down, double G2_p_next, double G2_p_next_down, double G3_p_next, double G3_p_next_down, double G4_p_next, double G4_p_next_down, double P_p_next, double P_p_next_up, double P_p_next_down, double delta_x, double delta_y_t)
         {
             double dF1_p_x_next = (dETA_x * ((F1_p_next_down - F1_p_next) / delta_y_t)) + (dETA_y * ((G1_p_next_down - G1_p_next) / delta_y_t));
@@ -201,6 +187,7 @@ namespace LibreriaClases
             return arrayF_next;
         }
 
+        //calculate corrector step for lower boundary
         public double [] calculateCorrectorBoundaryDown(double F1_p_next, double F1_p_next_up,double F2_p_next, double F2_p_next_up,double F3_p_next, double F3_p_next_up,double F4_p_next, double F4_p_next_up,double G1_p_next, double G1_p_next_up,double G2_p_next, double G2_p_next_up,double G3_p_next, double G3_p_next_up,double G4_p_next, double G4_p_next_up,double delta_x,double delta_y_t)
         {
             double dF1_p_x_next = (dETA_x * ((F1_p_next - F1_p_next_up) / delta_y_t)) + (dETA_y * ((G1_p_next - G1_p_next_up) / delta_y_t));
@@ -222,6 +209,7 @@ namespace LibreriaClases
             return arrayF_next;
         }
 
+        //calculate corrector step for upper boundary
         public double[] calculateCorrectorBoundaryUp(double F1_p_next, double F1_p_next_down, double F2_p_next, double F2_p_next_down, double F3_p_next, double F3_p_next_down, double F4_p_next, double F4_p_next_down, double G1_p_next, double G1_p_next_down, double G2_p_next, double G2_p_next_down, double G3_p_next, double G3_p_next_down, double G4_p_next, double G4_p_next_down, double delta_x, double delta_y_t)
         {
             double dF1_p_x_next = (dETA_x * ((F1_p_next_down - F1_p_next) / delta_y_t)) + (dETA_y * ((G1_p_next_down - G1_p_next) / delta_y_t));
@@ -243,29 +231,9 @@ namespace LibreriaClases
             return arrayF_next;
         }
 
-        public void calculatePrimitivesAndGBody(double R_air) //Calculate the values of u,v,T,P,rho from F's and G's
+        //Calculate the values of u,v,T,P,rho from F's and G's for body cells
+        public void calculatePrimitivesAndGBody(double R_air) 
         {
-            /**double A, B, C;
-
-            A = (Math.Pow(F3, 2) / (2 * Math.Pow(F1,1))) - F4;
-            B = (Gamma / (Gamma - 1)) * F1 * F2;
-            C = -(((Gamma + 1) / (2 * (Gamma - 1))) * Math.Pow(F1, 3));
-
-            Rho = (-(B) + Math.Sqrt(Math.Pow(B, 2) - (4 * A * C))) / (2 * A);
-            u = F1 / Rho;
-            v = F3 / F1;
-            P = F2 - (F1 * u);
-            T = (P) / (Rho * R_air);
-            a = Math.Sqrt(Gamma * R_air * T);
-            M = (Math.Sqrt((Math.Pow(u , 2)) + (Math.Pow(v, 2)))) / a;
-            M_angle = Math.Asin(1 / M);
-
-            G1 = Rho * (F3 / F1);
-            G2 = F3;
-            G3 = (Rho * (Math.Pow((F3 / F1) , 2))) + F2 - ((Math.Pow(F1 , 2)) / Rho);
-            G4 = ((Gamma / (Gamma - 1)) * ((F2) - ((Math.Pow(F1, 2)) / Rho)) * (F3 / F1)) + (((Rho * F3) / (2 * F1)) * ((Math.Pow((F1 / Rho) , 2)) + (Math.Pow((F3 / F1) , 2))));
-        
-             */
             double A, B, C;
 
             A = (Math.Pow(F3, 2) / (2 * F1)) - F4;
@@ -288,75 +256,9 @@ namespace LibreriaClases
         
         }
 
+        //calculate the values of primitives from F's and G's for boundary
         public void calculatePrimitivesBoundary(double R_air,double E,double Theta)
         {
-            /*Theta = Theta * (Math.PI / 180);
-            double A, B, C;
-
-            A = (Math.Pow(F3, 2) / (2 * Math.Pow(F1,1))) - F4;
-            B = (Gamma / (Gamma - 1)) * F1 * F2;
-            C = -(((Gamma + 1) / (2 * (Gamma - 1))) * Math.Pow(F1, 3));
-
-            double Rho_cal, u_cal, v_cal, P_cal, T_cal, M_cal, phi, f_cal, f_act;
-
-            Rho_cal = (-(B) + Math.Sqrt(Math.Pow(B, 2) - (4 * A * C))) / (2 * A);
-            u_cal = F1 / Rho_cal;
-            v_cal = F3 / F1;
-            P_cal = F2 - (F1 * u_cal);
-            T_cal = P_cal / (R_air * Rho_cal);
-            M_cal = (Math.Sqrt((Math.Pow(u_cal, 2)) + (Math.Pow(v_cal, 2)))) / Math.Sqrt(Gamma * R_air * T_cal);
-
-            if (x < E)
-            {
-                phi = Math.Atan(v_cal / u_cal);
-            }
-            else
-            {
-                phi = Theta - (Math.Atan(Math.Abs(v_cal) / u_cal));
-            }
-            f_cal = Math.Sqrt((Gamma + 1) / (Gamma - 1)) * (Math.Atan(Math.Sqrt(((Gamma - 1) / (Gamma + 1)) * (Math.Pow(M_cal, 2) - 1)))) - (Math.Atan(Math.Sqrt(Math.Pow(M_cal, 2) - 1)));
-            f_act = f_cal + phi;
-
-            double a_int = 1.1; 
-            double b_int = 2.9; 
-            double precision = 0.0000001;
-            double zero_f1 = Math.Sqrt((Gamma + 1) / (Gamma - 1)) * (Math.Atan(Math.Sqrt(((Gamma - 1) / (Gamma + 1)) * (Math.Pow(a_int, 2) - 1))))  - (Math.Atan(Math.Sqrt(Math.Pow(a_int, 2) - 1))) - f_act;
-            double zero_f2 = Math.Sqrt((Gamma + 1) / (Gamma - 1)) * (Math.Atan(Math.Sqrt(((Gamma - 1) / (Gamma + 1)) * (Math.Pow(((a_int + b_int) / 2), 2) - 1))))  - (Math.Atan(Math.Sqrt(Math.Pow(((a_int + b_int) / 2), 2) - 1)))  - f_act;
-            while ((b_int - a_int) / 2 > precision)
-            {
-                if (zero_f1 * zero_f2 <= 0)
-                    b_int = (a_int + b_int) / 2;
-                else
-                    a_int = (a_int + b_int) / 2;
-                zero_f1 = Math.Sqrt((Gamma + 1) / (Gamma - 1)) * (Math.Atan(Math.Sqrt(((Gamma - 1) / (Gamma + 1)) * (Math.Pow(a_int, 2) - 1))))  - (Math.Atan(Math.Sqrt(Math.Pow(a_int, 2) - 1)))  - f_act;
-                zero_f2 = Math.Sqrt((Gamma + 1) / (Gamma - 1)) * (Math.Atan(Math.Sqrt(((Gamma - 1) / (Gamma + 1)) * (Math.Pow(((a_int + b_int) / 2), 2) - 1))))  - (Math.Atan(Math.Sqrt(Math.Pow(((a_int + b_int) / 2), 2) - 1)))  - f_act;
-            }
-
-            double M_act = (a_int + b_int)/2; 
-            M = M_act;
-            M_angle = (Math.Asin(1 / M));// *(180 / Math.PI);
-            P = P_cal*(Math.Pow(((1 + ((Gamma - 1)/2)*(Math.Pow(M_cal,2)))/(1 + ((Gamma - 1)/2)*(Math.Pow(M_act,2)))),(Gamma/(Gamma - 1))));
-            T = T_cal*((1 + ((Gamma - 1)/2)*(Math.Pow(M_cal,2)))/(1 + ((Gamma - 1)/2)*(Math.Pow(M_act,2))));
-            Rho = P/(R_air*T);
-            u = u_cal;
-            a = Math.Sqrt(Gamma*R_air*T);
-
-            if (x > E)
-                v = -(u*Math.Tan(Theta));
-            else
-                v = 0;
-
-            F1 = Rho * u;
-            F2 = (Rho * (Math.Pow(u , 2))) + P;
-            F3 = Rho * u * v;
-            F4 = ((Gamma / (Gamma - 1)) * P * u) + (Rho * u * (((Math.Pow(u , 2)) + (Math.Pow(v , 2)))) / 2);
-
-            G1 = Rho * (F3 / F1);
-            G2 = F3;
-            G3 = (Rho * (Math.Pow((F3 / F1), 2))) + F2 - ((Math.Pow(F1, 2)) / Rho);
-            G4 = ((Gamma / (Gamma - 1)) * ((F2) - ((Math.Pow(F1, 2)) / Rho)) * (F3 / F1)) + (((Rho * F3) / (2 * F1)) * ((Math.Pow((F1 / Rho), 2)) + (Math.Pow((F3 / F1), 2))));
-
-            */
 
             Theta = Theta * (Math.PI / 180);
             double A, B, C;
@@ -426,18 +328,16 @@ namespace LibreriaClases
 
         }
 
+        //calculate polygon dimension for each variables
         public void calculatePoligon_u(double up_left_X, double up_left_Y, double up_right_X, double up_right_Y, double down_left_X, double down_left_Y, double down_right_X, double down_right_Y)
         {
             polygon_u.Stroke = Brushes.Transparent;
-            //polygon_u.Fill = Brushes.Blue;
             polygon_u.StrokeThickness = 0;
             PointCollection pointCollection = new PointCollection();
             Point point1 = new Point(up_left_X * 7.5, up_left_Y * 7.5);
             Point point2 = new Point(up_right_X * 7.5, up_right_Y * 7.5);
             Point point3 = new Point(down_left_X * 7.5, down_left_Y * 7.5);
             Point point4 = new Point(down_right_X * 7.5, down_right_Y * 7.5);
-            //polygon.Points = new PointCollection() { new Point(up_left_X, up_left_Y), new Point(up_right_X, up_right_Y), new Point(down_left_X, down_left_Y), new Point(down_right_X, down_right_Y) };
-            //poligon.Fill = Brushes.AliceBlue;
 
             pointCollection.Add(point1);
             pointCollection.Add(point2);
@@ -449,15 +349,12 @@ namespace LibreriaClases
         public void calculatePoligon_v(double up_left_X, double up_left_Y, double up_right_X, double up_right_Y, double down_left_X, double down_left_Y, double down_right_X, double down_right_Y)
         {
             polygon_v.Stroke = Brushes.Transparent;
-            //polygon_v.Fill = Brushes.White;
             polygon_v.StrokeThickness = 0;
             PointCollection pointCollection = new PointCollection();
             Point point1 = new Point(up_left_X * 7.5, up_left_Y * 7.5);
             Point point2 = new Point(up_right_X * 7.5, up_right_Y * 7.5);
             Point point3 = new Point(down_left_X * 7.5, down_left_Y * 7.5);
             Point point4 = new Point(down_right_X * 7.5, down_right_Y * 7.5);
-            //polygon.Points = new PointCollection() { new Point(up_left_X, up_left_Y), new Point(up_right_X, up_right_Y), new Point(down_left_X, down_left_Y), new Point(down_right_X, down_right_Y) };
-            //poligon.Fill = Brushes.AliceBlue;
 
             pointCollection.Add(point1);
             pointCollection.Add(point2);
@@ -469,15 +366,12 @@ namespace LibreriaClases
         public void calculatePoligon_rho(double up_left_X, double up_left_Y, double up_right_X, double up_right_Y, double down_left_X, double down_left_Y, double down_right_X, double down_right_Y)
         {
             polygon_rho.Stroke = Brushes.Transparent;
-            //polygon_rho.Fill = Brushes.Black;
             polygon_rho.StrokeThickness = 0;
             PointCollection pointCollection = new PointCollection();
             Point point1 = new Point(up_left_X * 7.5, up_left_Y * 7.5);
             Point point2 = new Point(up_right_X * 7.5, up_right_Y * 7.5);
             Point point3 = new Point(down_left_X * 7.5, down_left_Y * 7.5);
             Point point4 = new Point(down_right_X * 7.5, down_right_Y * 7.5);
-            //polygon.Points = new PointCollection() { new Point(up_left_X, up_left_Y), new Point(up_right_X, up_right_Y), new Point(down_left_X, down_left_Y), new Point(down_right_X, down_right_Y) };
-            //poligon.Fill = Brushes.AliceBlue;
 
             pointCollection.Add(point1);
             pointCollection.Add(point2);
@@ -490,15 +384,12 @@ namespace LibreriaClases
         public void calculatePoligon_P(double up_left_X, double up_left_Y, double up_right_X, double up_right_Y, double down_left_X, double down_left_Y, double down_right_X, double down_right_Y)
         {
             polygon_P.Stroke = Brushes.Transparent;
-            //polygon_P.Fill = Brushes.Pink;
             polygon_P.StrokeThickness = 0;
             PointCollection pointCollection = new PointCollection();
             Point point1 = new Point(up_left_X * 7.5, up_left_Y * 7.5);
             Point point2 = new Point(up_right_X * 7.5, up_right_Y * 7.5);
             Point point3 = new Point(down_left_X * 7.5, down_left_Y * 7.5);
             Point point4 = new Point(down_right_X * 7.5, down_right_Y * 7.5);
-            //polygon.Points = new PointCollection() { new Point(up_left_X, up_left_Y), new Point(up_right_X, up_right_Y), new Point(down_left_X, down_left_Y), new Point(down_right_X, down_right_Y) };
-            //poligon.Fill = Brushes.AliceBlue;
 
             pointCollection.Add(point1);
             pointCollection.Add(point2);
@@ -511,15 +402,12 @@ namespace LibreriaClases
         public void calculatePoligon_T(double up_left_X, double up_left_Y, double up_right_X, double up_right_Y, double down_left_X, double down_left_Y, double down_right_X, double down_right_Y)
         {
             polygon_T.Stroke = Brushes.Transparent;
-            //polygon_T.Fill = Brushes.Green;
             polygon_T.StrokeThickness = 0;
             PointCollection pointCollection = new PointCollection();
             Point point1 = new Point(up_left_X * 7.5, up_left_Y * 7.5);
             Point point2 = new Point(up_right_X * 7.5, up_right_Y * 7.5);
             Point point3 = new Point(down_left_X * 7.5, down_left_Y * 7.5);
             Point point4 = new Point(down_right_X * 7.5, down_right_Y * 7.5);
-            //polygon.Points = new PointCollection() { new Point(up_left_X, up_left_Y), new Point(up_right_X, up_right_Y), new Point(down_left_X, down_left_Y), new Point(down_right_X, down_right_Y) };
-            //poligon.Fill = Brushes.AliceBlue;
 
             pointCollection.Add(point1);
             pointCollection.Add(point2);
@@ -532,15 +420,12 @@ namespace LibreriaClases
         public void calculatePoligon_M(double up_left_X, double up_left_Y, double up_right_X, double up_right_Y, double down_left_X, double down_left_Y, double down_right_X, double down_right_Y)
         {
             polygon_M.Stroke = Brushes.Transparent;
-            //polygon_M.Fill = Brushes.Yellow;
             polygon_M.StrokeThickness = 0;
             PointCollection pointCollection = new PointCollection();
             Point point1 = new Point(up_left_X * 7.5, up_left_Y * 7.5);
             Point point2 = new Point(up_right_X * 7.5, up_right_Y * 7.5);
             Point point3 = new Point(down_left_X * 7.5, down_left_Y * 7.5);
             Point point4 = new Point(down_right_X * 7.5, down_right_Y * 7.5);
-            //polygon.Points = new PointCollection() { new Point(up_left_X, up_left_Y), new Point(up_right_X, up_right_Y), new Point(down_left_X, down_left_Y), new Point(down_right_X, down_right_Y) };
-            //poligon.Fill = Brushes.AliceBlue;
 
             pointCollection.Add(point1);
             pointCollection.Add(point2);
@@ -551,6 +436,7 @@ namespace LibreriaClases
         }
 
 
+        //calculate the color for each polygon for each variables, we need the min value and max for each variables
         public void colorPolygon_u(double min, double max)
         {
             double incremento = Math.Abs(max - min);
@@ -944,60 +830,6 @@ namespace LibreriaClases
         }
 
 
-
-        /*public Cell(double M, double P, double rho, double T,double gamma)
-        {
-            this.M = M;
-            this.P = P;
-            this.rho = rho;
-            this.T = T;
-            this.gamma = gamma;
-        }
-
-        public Rectangle rectangle = new Rectangle();
-        double M, P, rho, T, gamma,u;
-        double theta = 5.532;
-        double R = 8.314;
-        double molar_mass = 0.0289;
-        double v = 0;
-        double F1, F2, F3, F4, G1, G2, G3, G4;
-
-        public void calcularRectangle(double H, double M)
-        {
-            double mu = Math.Asin(1 / M)*(180/Math.PI);
-            rectangle.Width = Math.Max(((H / 40) / Math.Tan((theta + mu)* (Math.PI/180))), ((H / 40) / Math.Tan((theta - mu) * (Math.PI/180))));
-            rectangle.Height = H / 40;
-        }
-
-        public void Initialize() //only for first column
-        {
-            u = M*(Math.Sqrt((gamma*R*T)/molar_mass));
-            F1 = rho*u;
-            F2 = (rho * Math.Pow(u, 2)) + P;
-            F3 = rho * u * v;
-            F4 = ((gamma / (gamma - 1)) * (rho * u)) + ((rho * u) * ((Math.Pow(u, 2) + Math.Pow(v, 2)) / 2));
-
-            double A = (Math.Pow(F3, 2) / (2 * F1)) - F4;
-            double B = (gamma / (gamma - 1)) * F1 * F2;
-            double C = -(((gamma + 1) / (2 * (gamma - 1))) * Math.Pow(F1, 3));
-
-            rho = (-B + Math.Sqrt(Math.Pow(B,2)-(4*A*C))) / (2 * A);
-            u = F1 / rho;
-            v = F3 / F1;
-            P = F2 - F1 * u;
-            T = P / (rho * 287);
-
-            G1 = rho * (F3 / F1);
-            G2 = F3;
-            G3 = rho * Math.Pow((F3 / F1), 2) + F2 - (Math.Pow(F1, 2) / rho);
-            G4 = ((gamma / (gamma - 1)) * (F2 - (Math.Pow(F1, 2) / rho)) * (F3 / F1)) + ((rho / 2) * (F3 / F1) * (Math.Pow((F1 / rho), 2) + Math.Pow((F3 / F1), 2)));
-        }
-
-        public void calculate()
-        {
-
-        }
-          */
     }
 
 

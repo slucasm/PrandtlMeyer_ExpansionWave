@@ -44,6 +44,6 @@
         <Label Content="u: 0.141" Height="33" HorizontalAlignment="Left" Margin="920,560,0,0" Name="label_libro_u" VerticalAlignment="Top" Width="130" Foreground="White" FontFamily="Century Gothic" FontWeight="Bold" />
         <Label Content="v: 3.76" Height="33" HorizontalAlignment="Left" Margin="920,580,0,0" Name="label_libro_v" VerticalAlignment="Top" Width="130" Foreground="White" FontFamily="Century Gothic" FontWeight="Bold" />
         <Label Content="Quantity % error (Anderson book): " Height="30" HorizontalAlignment="Left" Margin="700,520,0,0" Name="label_quantityerror_libro" VerticalAlignment="Top" Width="224" FontFamily="Century Gothic" FontWeight="Bold" Foreground="White" />
-        <Button Background="#FF007CBF" BorderBrush="#FF007CBF" BorderThickness="0" Content="Save results" FontFamily="Century Gothic" FontSize="20" FontWeight="Bold" Foreground="White" Height="30" HorizontalAlignment="Left" Margin="827,12,0,0" Name="button_save" VerticalAlignment="Top" Width="181" />
+        <Button Background="#FF007CBF" BorderBrush="#FF007CBF" BorderThickness="0" Content="Save results" FontFamily="Century Gothic" FontSize="20" FontWeight="Bold" Foreground="White" Height="30" HorizontalAlignment="Left" Margin="827,12,0,0" Name="button_save" VerticalAlignment="Top" Width="181" Click="button_save_Click" />
     </Grid>
 </Window>

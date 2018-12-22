@@ -23,22 +23,9 @@ namespace LibreriaClases
         public double u_in, a_in, v_in, Rho_in, M_in, P_in, T_in, Gamma, E, theta, R_air;
         public Cell[,] matrix;
 
-        //public Cell[,] matrix = new Cell[rows,columns];
-
         static double C = 0.5; //Courant number
         static double H = 40;
-        //public double theta = 5.352;
         static double L = 65;
-        //public double E = 10;
-        //public double M_in = 2;
-        //public double P_in = 1.01*Math.Pow(10,5);
-        //public double Rho_in = 1.23; 
-        //public double R_air = 287; 
-        //public double Gamma = 1.4;
-        //public double T_in = 286.1;
-        //double a_in = Math.Sqrt(Gamma * R_air * T_in);
-        //double v_in = 0;
-        //double u_in = M_in * a_in;
 
         double delta_y_t = 0.025;
 
@@ -56,6 +43,7 @@ namespace LibreriaClases
 
         List<Cell> listCells = new List<Cell>();
 
+        //save initial values
         public void setParameters(int rows, int columns, double rho, double P, double T, double M, double R, double gamma, double E, double theta)
         {
             this.rows = rows;
@@ -77,7 +65,7 @@ namespace LibreriaClases
         }
         
 
-        public void Initialize() //We write the initial values for the first column
+        public void Initialize() //We set & calculate values for the first column
         {
             for (int a = 0; a < rows; a++)
             {
@@ -114,7 +102,6 @@ namespace LibreriaClases
 
         public void calculate()
         {
-            //for (int j = 0; j<columns-1; j++)
             for (int j = 0; matrix[0,j].x <= L; j++)
             {
                 for (int i = 0; i < rows; i++)//First que calculate values for transformation grid
@@ -122,25 +109,23 @@ namespace LibreriaClases
                     matrix[i, j].calculateTransform(H, E, theta);
                 }
 
-                double[] max_tan_Array = new double[rows];//
+                double[] max_tan_Array = new double[rows];
 
-                for (int y = 0; y < rows; y++)//Now we calculate the delta_x, that is the step size
+                for (int y = 0; y < rows; y++)
                 {
                     delta_y = matrix[2, j].y - matrix[1, j].y;
-                    //double[] max_tan_Array = new double[rows];
                     max_tan_Array[y] = matrix[y, j].calculateTanMax(theta);
-                    //double max_tan = max_tan_Array.Max();
-                    //delta_x = matrix[y, j].calculateStep(C, delta_y, max_tan);
                 }
-
-                double max_tan = max_tan_Array.Max();//
-                delta_x = C*(delta_y/max_tan);//
+                //Now we calculate the delta_x, that is the step size
+                double max_tan = max_tan_Array.Max();
+                delta_x = C*(delta_y/max_tan);
                 delta_xi = delta_x;
                 for (int e = 0; e < rows; e++)
                 {
-                    matrix[e, j + 1].x = matrix[e, j].x + delta_x;
+                    matrix[e, j + 1].x = matrix[e, j].x + delta_x; //add to all matrix their delta_x
                 }
 
+                //calculate predictor Step for body & boundary
                 for (int b = 0; b < rows; b++)
                 {
                     double[] arrayF_p;
@@ -163,6 +148,7 @@ namespace LibreriaClases
                     matrix[b, j + 1].F4_p = arrayF_p[3];
                 }
 
+                //calculate G predicted
                 for (int s = 0; s < rows; s++)
                 {
                     double[] arrayG_p = matrix[s, j].calculateGPredicted(matrix[s, j + 1].F1_p, matrix[s, j + 1].F2_p, matrix[s, j + 1].F3_p, matrix[s, j + 1].F4_p);
@@ -174,6 +160,7 @@ namespace LibreriaClases
                     matrix[s, j + 1].P_p = arrayG_p[5];
                 }
 
+                //calculate corrector step for body & boundary
                 for (int c = 0; c < rows; c++)
                 {
                     double[] arrayF;
@@ -197,6 +184,7 @@ namespace LibreriaClases
 
                 }
 
+                //calculates values of primitives variables on body & boundary
                 for (int d = 0; d < rows; d++)
                 {
                     if (d == 0)
@@ -215,7 +203,7 @@ namespace LibreriaClases
             }
         }
 
-
+        //call method for each cell to calculate the polygon
         public void calculatePoligons()
         {
             double[] arrayDeltaY = new double[columns];
@@ -253,7 +241,7 @@ namespace LibreriaClases
             }
         }
 
-
+        //call method for each cell to colour the polygon 
         public void colorPolygons()
         {
             List<Cell> listaCells = new List<Cell>();
@@ -348,7 +336,7 @@ namespace LibreriaClases
 
         }
 
-
+        //get list with all the polygons
         public List<List<Polygon>> getListPolygons()
         {
             List<List<Polygon>> listPolygons = new List<List<Polygon>>();
@@ -389,12 +377,14 @@ namespace LibreriaClases
             listPolygons.Add(listPolygons_M);
             return listPolygons;
         }
-
+        
+        //get list with cells 
         public List<Cell> getListCells()
         {
             return listCells;
         }
 
+        //create tables for all the matrix
         public List<DataTable> createTables()
         {
 
@@ -457,6 +447,7 @@ namespace LibreriaClases
 
         }
 
+        //clear the tables created before
         public void clearTables()
         {
             table_u.Clear();
@@ -469,7 +460,7 @@ namespace LibreriaClases
         }
 
 
-
+        //save a document with the parameters for the simulation
         public void Save()
         {
             SaveFileDialog ofd = new SaveFileDialog();
@@ -478,6 +469,7 @@ namespace LibreriaClases
             ofd.Title = "Guarda los datos";
             ofd.ShowDialog();
             string nombre = ofd.FileName;
+            
             StreamWriter fichero = new StreamWriter(nombre);
             fichero.Write(rows);
             fichero.Write("\r\n");
@@ -501,9 +493,11 @@ namespace LibreriaClases
             fichero.Write("\r\n");
             fichero.Close();
 
+            MessageBox.Show("File saved correctly");
+
         }
 
-
+        //open a document with the parameters for the simulation
         public void Open()
         {
             OpenFileDialog ofd = new OpenFileDialog();
@@ -532,6 +526,7 @@ namespace LibreriaClases
             matrix = new Cell[rows, columns];
         }
 
+        //calculate the points for the graph (each graph have two plots, evolution of one variable along the expansion corner (one plot for boundary and other for body))
         public List<List<Point>> calculateGraph()
         {
 
@@ -611,101 +606,5 @@ namespace LibreriaClases
 
         }
 
-
-
-
-
-
-        /**
-           public List<Polygon> getListPolygon_u()
-        {
-            List<Polygon> listPolygons_u = new List<Polygon>();
-            for (int j = 0; j < columns - 1; j++)
-            {
-                for (int i = 0; i < rows; i++)
-                {
-                    listPolygons_u.Add(matrix[i, j].polygon_u);
-                }
-            }
-            return listPolygons_u;
-        }
-        public List<Polygon> getListPolygon_v()
-        {
-            List<Polygon> listPolygons_v = new List<Polygon>();
-            for (int j = 0; j < columns - 1; j++)
-            {
-                for (int i = 0; i < rows; i++)
-                {
-                    listPolygons_v.Add(matrix[i, j].polygon_v);
-                }
-            }
-            return listPolygons_v;
-        }
-        public List<Polygon> getListPolygon_rho()
-        {
-            List<Polygon> listPolygons_rho = new List<Polygon>();
-            for (int j = 0; j < columns - 1; j++)
-            {
-                for (int i = 0; i < rows; i++)
-                {
-                    listPolygons_rho.Add(matrix[i, j].polygon_rho);
-                }
-            }
-            return listPolygons_rho;
-        }
-        public List<Polygon> getListPolygon_P()
-        {
-            List<Polygon> listPolygons_P = new List<Polygon>();
-            for (int j = 0; j < columns - 1; j++)
-            {
-                for (int i = 0; i < rows; i++)
-                {
-                    listPolygons_P.Add(matrix[i, j].polygon_P);
-                }
-            }
-            return listPolygons_P;
-        }
-        public List<Polygon> getListPolygon_T()
-        {
-            List<Polygon> listPolygons_T = new List<Polygon>();
-            for (int j = 0; j < columns - 1; j++)
-            {
-                for (int i = 0; i < rows; i++)
-                {
-                    listPolygons_T.Add(matrix[i, j].polygon_T);
-                }
-            }
-            return listPolygons_T;
-        }
-        public List<Polygon> getListPolygon_M()
-        {
-            List<Polygon> listPolygons_M = new List<Polygon>();
-            for (int j = 0; j < columns - 1; j++)
-            {
-                for (int i = 0; i < rows; i++)
-                {
-                    listPolygons_M.Add(matrix[i, j].polygon_M);
-                }
-            }
-            return listPolygons_M;
-        }*/
-
-        //double AX = 0;
-
-        //public void actualizarRectanglesMatrix()
-        //{
-            
-
-        //    for (int i = 0; AX < 10; i++)
-        //    {
-        //        for (int j = 0; j < 40; j++)
-        //        {
-        //            matrix[i, j] = new Cell();
-        //            matrix[i, j].calcularRectangle(40, 2);
-        //        }
-        //        AX += matrix[i, 1].rectangle.Width;
-        //    }
-
-        //}
     }
 }
